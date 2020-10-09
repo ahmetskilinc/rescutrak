@@ -19,7 +19,7 @@ export const signUp = (data) => async (dispatch, getState, { getFirebase }) => {
 				rescueName: data.rescueName,
 				darkMode: false,
 				primaryColor: "#00bcd4",
-				secondaryColor: "#00e676",
+				secondaryColor: "#4caf50",
 				fileUrl: "",
 			});
 			dispatch({ type: actions.AUTH_SUCCESS });
@@ -49,6 +49,14 @@ export const signIn = (data) => async (dispatch, getState, { getFirebase }) => {
 		})
 		.catch((error) => {
 			dispatch({ type: actions.AUTH_FAIL, payload: error.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: error.message,
+				},
+			});
 		});
 };
 
@@ -201,22 +209,22 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 	await user
 		.delete()
 		.then(() => {
-			firebase
-				.firestore()
-				.collection("users")
-				.doc(user.uid)
-				.delete()
-				.then(() => {
-					dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
-					dispatch({
-						type: actions.OPEN_SNACKBAR,
-						payload: {
-							snackbarOpen: true,
-							snackbarType: "warning",
-							snackbarMessage: "Account deleted",
-						},
-					});
-				});
+			// firebase
+			// 	.firestore()
+			// 	.collection("users")
+			// 	.doc(user.uid)
+			// 	.delete()
+			// 	.then(() => {
+			dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "warning",
+					snackbarMessage: "Account deleted",
+				},
+			});
+			// });
 		})
 		.catch((err) => {
 			dispatch({ type: actions.DELETE_ACCOUNT_FAIL, payload: err.message });

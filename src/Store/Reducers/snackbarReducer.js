@@ -20,7 +20,6 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				snackbarOpen: false,
-				snackbarType: null,
 				snackbarMessage: "",
 			};
 		default:

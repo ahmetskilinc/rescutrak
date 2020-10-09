@@ -9,7 +9,7 @@ import Login from "./Components/Login/Login";
 import Logout from "./Components/Logout/Logout";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Components/Home/Home";
-import Patients from "./Components/Patients/Patients";
+// import Patients from "./Components/Patients/Patients";
 import Profile from "./Components/Profile/Profile";
 import ProfileEdit from "./Components/Profile/ProfileEdit";
 import { Button, CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
@@ -64,7 +64,7 @@ function App({
 					main: "#00bcd4",
 				},
 				secondary: {
-					main: "#00e676",
+					main: "#4caf50",
 				},
 			},
 		});
