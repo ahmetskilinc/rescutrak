@@ -14,7 +14,7 @@ const CustomSnackbar = ({ snackbarOpen, snackbarMessage, snackbarType, closeSnac
 
 	return (
 		<Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose}>
-			<Alert elevation={6} onClose={handleClose} severity={snackbarType}>
+			<Alert elevation={6} onClose={handleClose} variant="filled" severity={snackbarType}>
 				{snackbarMessage}
 			</Alert>
 		</Snackbar>

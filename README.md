@@ -13,7 +13,6 @@ This is a small project a friend of mine had the idea of creating. After creatin
    ![firebase.js](./images/firebasejs.png)
 5. Run `npm start` in your terminal from the root folder
 
-
 ## What I Used:
 
 - [React](https://reactjs.org/)
@@ -33,3 +32,5 @@ This is a small project a friend of mine had the idea of creating. After creatin
 ![Profile Screen](./images/profile.png)
 ### Profile Edit/Change Theme Screen:
 ![Profile Edit/Change Theme Screen](./images/changeTheme.png)
+### Snackbar Example:
+![Snackbar Example](./images/snackbarExample.png)

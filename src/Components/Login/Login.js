@@ -93,7 +93,7 @@ const Login = ({ login, loading, error, cleanUp }) => {
 										<Button
 											type="submit"
 											variant="contained"
-											color="primary"
+											color="secondary"
 											className={classes.button}
 											disabled={!isValid}
 										>
