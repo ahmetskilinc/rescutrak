@@ -10,7 +10,7 @@ This is a small project a friend of mine had the idea of creating. After creatin
 2. Setup [Firebase](https://firebase.google.com/) with Firestore, Database, Storage and Authentication(email and password).
 3. Add `.env.local` to the root folder and add `REACT_APP_APIKEY` with your Firebase API Key.
 4. Update the `src/firebase.js` file shown below.
-   ![firebase.js](./images/firebasejs.png =100x)
+   ![firebase.js](./images/firebasejs.png)
 5. Run `npm start` in your terminal from the root folder
 
 
