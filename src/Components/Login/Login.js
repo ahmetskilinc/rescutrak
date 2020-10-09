@@ -1,5 +1,5 @@
 import { Button, CircularProgress, makeStyles, Paper, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -9,7 +9,6 @@ import { TextField } from "formik-material-ui";
 import * as actions from "../../Store/Actions";
 
 import { isMobile } from "react-device-detect";
-import CustomSnackbar from "../CustomSnackbar/CustomSnackbar";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -46,7 +45,6 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = ({ login, loading, error, cleanUp }) => {
-	const [showSnackbar, setShowSnackbar] = useState(false);
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -64,7 +62,6 @@ const Login = ({ login, loading, error, cleanUp }) => {
 						validationSchema={LoginSchema}
 						onSubmit={async (values, { setSubmitting }) => {
 							await login(values);
-							setShowSnackbar(true);
 							setSubmitting(false);
 						}}
 					>
@@ -121,12 +118,6 @@ const Login = ({ login, loading, error, cleanUp }) => {
 					</Formik>
 				</Paper>
 			</div>
-			<CustomSnackbar
-				show={showSnackbar}
-				error={error}
-				loading={loading}
-				closeSnackbar={() => setShowSnackbar(false)}
-			/>
 		</>
 	);
 };

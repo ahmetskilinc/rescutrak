@@ -1,13 +1,12 @@
-import { Button, CircularProgress, makeStyles, Paper, Slide, Snackbar, Typography } from "@material-ui/core";
+import { Button, CircularProgress, makeStyles, Paper, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-material-ui";
 
 import * as actions from "../../Store/Actions";
-import Alert from "@material-ui/lab/Alert";
 
 import { isMobile } from "react-device-detect";
 
@@ -53,16 +52,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 const SignUp = ({ signUp, loading, error, cleanUp }) => {
-	const [snackbarOpen, setSnackbarOpen] = useState(false);
 	const classes = useStyles();
-
-	const handleClose = (event, reason) => {
-		if (reason === "clickaway") {
-			return;
-		}
-
-		setSnackbarOpen(false);
-	};
 	useEffect(() => {
 		return () => {
 			cleanUp();
@@ -84,7 +74,6 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 						validationSchema={SignupSchema}
 						onSubmit={async (values, { setSubmitting }) => {
 							await signUp(values);
-							setSnackbarOpen(true);
 							setSubmitting(false);
 						}}
 					>
@@ -174,16 +163,6 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 					</Formik>
 				</Paper>
 			</div>
-			<Snackbar
-				open={error && snackbarOpen}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="error">
-					{error}
-				</Alert>
-			</Snackbar>
 		</>
 	);
 };

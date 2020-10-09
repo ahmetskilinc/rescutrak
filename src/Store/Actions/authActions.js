@@ -60,9 +60,25 @@ export const verifyEmail = () => async (dispatch, getState, { getFirebase }) => 
 		.currentUser.sendEmailVerification()
 		.then(() => {
 			dispatch({ type: actions.VERIFY_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "success",
+					snackbarMessage: "Verification email has been sent",
+				},
+			});
 		})
 		.catch((error) => {
 			dispatch({ type: actions.VERIFY_FAIL, payload: error.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: error.message,
+				},
+			});
 		});
 };
 
@@ -74,9 +90,26 @@ export const recoverPassword = (data) => async (dispatch, getState, { getFirebas
 		.sendPasswordResetEmail(data.email)
 		.then(() => {
 			dispatch({ type: actions.FORGOTTEN_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "success",
+					snackbarMessage:
+						"Password reset email will be sent if the email you entered corresponds with an account",
+				},
+			});
 		})
 		.catch((err) => {
 			dispatch({ type: actions.FORGOTTEN_FAIL, payload: err.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: err.message,
+				},
+			});
 		});
 };
 
@@ -103,9 +136,25 @@ export const editProfile = (data) => async (dispatch, getState, { getFirebase })
 		})
 		.then(() => {
 			dispatch({ type: actions.PROFILE_EDIT_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "success",
+					snackbarMessage: "Profile updated",
+				},
+			});
 		})
 		.catch((err) => {
 			dispatch({ type: actions.PROFILE_EDIT_FAIL, payload: err.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: err.message,
+				},
+			});
 		});
 };
 
@@ -123,10 +172,25 @@ export const uploadPhoto = (data) => async (dispatch, getState, { getFirebase })
 				fileUrl: res.downloadURL,
 			});
 			dispatch({ type: actions.PROFILE_PHOTO_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "success",
+					snackbarMessage: "Profile photo uploaded",
+				},
+			});
 		})
 		.catch((error) => {
 			dispatch({ type: actions.PROFILE_PHOTO_ERROR });
-			console.log(error.message);
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: error.message,
+				},
+			});
 		});
 };
 
@@ -144,10 +208,26 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 				.delete()
 				.then(() => {
 					dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
+					dispatch({
+						type: actions.OPEN_SNACKBAR,
+						payload: {
+							snackbarOpen: true,
+							snackbarType: "warning",
+							snackbarMessage: "Account deleted",
+						},
+					});
 				});
 		})
 		.catch((err) => {
 			dispatch({ type: actions.DELETE_ACCOUNT_FAIL, payload: err.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: err.message,
+				},
+			});
 		});
 };
 
@@ -160,9 +240,25 @@ export const sendPasswordResetEmail = () => async (dispatch, getState, { getFire
 		.sendPasswordResetEmail(userEmail)
 		.then(() => {
 			dispatch({ type: actions.SEND_PASSWORD_RESET_EMAIL_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "success",
+					snackbarMessage: "A password reset email has been sent to your email address",
+				},
+			});
 		})
 		.catch((err) => {
 			dispatch({ type: actions.SEND_PASSWORD_RESET_EMAIL_FAIL, payload: err.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: err.message,
+				},
+			});
 		});
 };
 

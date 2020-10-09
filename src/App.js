@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import "./App.css";
@@ -15,8 +15,8 @@ import ProfileEdit from "./Components/Profile/ProfileEdit";
 import { Button, CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
 import RecoverPassword from "./Components/RecoverPassword/RecoverPassword";
-import CustomSnackbar from "./Components/CustomSnackbar/CustomSnackbar";
 import { Alert } from "@material-ui/lab";
+import CustomSnackbar from "./Components/CustomSnackbar/CustomSnackbar";
 
 const useStyles = makeStyles((theme) => ({
 	verificationAlert: {
@@ -43,7 +43,6 @@ function App({
 	profileEmpty,
 	cleanUp,
 }) {
-	const [showSnackbar, setShowSnackbar] = useState(false);
 	let theme;
 	if (profileLoaded && profileEmpty === false) {
 		theme = createMuiTheme({
@@ -75,30 +74,7 @@ function App({
 
 	const handleVerificationEmail = () => {
 		sendVerification();
-		setShowSnackbar(true);
 	};
-
-	let action;
-	if (verificationLoading) {
-		action = <CircularProgress color="inherit" />;
-	} else {
-		action = (
-			<Button color="inherit" onClick={handleVerificationEmail}>
-				{isMobile ? "Resend Email" : "Resend verification email"}
-			</Button>
-		);
-	}
-
-	let snackbar;
-	if (loggedIn & !emailVerified) {
-		snackbar = (
-			<div className={classes.verificationAlert}>
-				<Alert variant="filled" severity="warning" action={action}>
-					Your email has not been verified. Please verify your email!
-				</Alert>{" "}
-			</div>
-		);
-	}
 
 	let routes;
 	if (loggedIn) {
@@ -131,16 +107,28 @@ function App({
 						<CssBaseline />
 						<NavBar />
 						<div className="wrapper">
-							{snackbar}
+							{loggedIn && !emailVerified && (
+								<div className={classes.verificationAlert}>
+									<Alert
+										variant="filled"
+										severity="warning"
+										action={
+											verificationLoading ? (
+												<CircularProgress color="inherit" />
+											) : (
+												<Button color="inherit" onClick={handleVerificationEmail}>
+													{isMobile ? "Resend Email" : "Resend verification email"}
+												</Button>
+											)
+										}
+									>
+										Your email has not been verified. Please verify your email!
+									</Alert>
+								</div>
+							)}
 							<div className={classes.routesWrapper}>{routes}</div>
 						</div>
-						<CustomSnackbar
-							show={showSnackbar}
-							error={verificationError}
-							loading={verificationLoading}
-							closeSnackbar={() => setShowSnackbar(false)}
-							message="Verification email has been sent to your email."
-						/>
+						<CustomSnackbar />
 					</>
 				) : (
 					<div className="spinnerWrapper">

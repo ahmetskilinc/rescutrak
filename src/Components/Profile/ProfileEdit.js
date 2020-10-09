@@ -13,8 +13,6 @@ import {
 	makeStyles,
 	MenuItem,
 	Modal,
-	Slide,
-	Snackbar,
 	Typography,
 	withStyles,
 } from "@material-ui/core";
@@ -31,7 +29,6 @@ import * as actions from "../../Store/Actions";
 
 import { isMobile } from "react-device-detect";
 import { red } from "@material-ui/core/colors";
-import { Alert } from "@material-ui/lab";
 import { DropzoneDialog } from "material-ui-dropzone";
 
 const DangerButton = withStyles((theme) => ({
@@ -176,18 +173,9 @@ const ProfileEdit = ({
 	const handleChange = (panel) => (event, isExpanded) => {
 		setExpanded(isExpanded ? panel : false);
 	};
-	const [showSnackbar, setShowSnackbar] = useState(false);
 	const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
 
 	const classes = useStyles();
-
-	const handleClose = (event, reason) => {
-		if (reason === "clickaway") {
-			return;
-		}
-
-		setShowSnackbar(false);
-	};
 
 	useEffect(() => {
 		return () => {
@@ -198,17 +186,14 @@ const ProfileEdit = ({
 	const handleDeleteAccount = () => {
 		deleteAccount();
 		setShowDeleteAccountModal(false);
-		setShowSnackbar(true);
 	};
 
 	const handleSendPasswordResetEmail = () => {
 		sendPasswordResetEmail();
-		setShowSnackbar(true);
 	};
 
 	const handleUploadPhoto = (files) => {
 		uploadPhoto(files);
-		setShowSnackbar(true);
 		setUploadOpen(false);
 	};
 
@@ -235,7 +220,6 @@ const ProfileEdit = ({
 							validationSchema={UpdateSchema}
 							onSubmit={async (values, { setSubmitting }) => {
 								editProfile(values);
-								setShowSnackbar(true);
 								setSubmitting(false);
 							}}
 						>
@@ -341,7 +325,6 @@ const ProfileEdit = ({
 							validationSchema={ThemeSchema}
 							onSubmit={async (values, { setSubmitting }) => {
 								updateTheme(values);
-								setShowSnackbar(true);
 								setSubmitting(false);
 							}}
 						>
@@ -505,77 +488,6 @@ const ProfileEdit = ({
 					</CardActions>
 				</Card>
 			</Modal>
-			<Snackbar
-				open={editProfileError && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="error">
-					{editProfileError}
-				</Alert>
-			</Snackbar>
-			<Snackbar
-				open={editProfileError === false && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="success">
-					Profile updated successfully!
-				</Alert>
-			</Snackbar>
-			<Snackbar
-				open={deleteProfileError && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="error">
-					{deleteProfileError}
-				</Alert>
-			</Snackbar>
-			<Snackbar
-				open={passwordResetEmailError && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="error">
-					{passwordResetEmailError}
-				</Alert>
-			</Snackbar>
-			<Snackbar
-				open={passwordResetEmailError === false && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="success">
-					Password reset email has been sent
-				</Alert>
-			</Snackbar>
-
-			<Snackbar
-				open={profilePhotoError && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="error">
-					{profilePhotoError}
-				</Alert>
-			</Snackbar>
-			<Snackbar
-				open={profilePhotoError === false && showSnackbar}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				TransitionComponent={(props) => <Slide {...props} direction="up" />}
-			>
-				<Alert onClose={handleClose} severity="success">
-					Profile Photo has been updated
-				</Alert>
-			</Snackbar>
 		</>
 	);
 };

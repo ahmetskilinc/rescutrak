@@ -1,5 +1,5 @@
 import { Button, CircularProgress, makeStyles, Paper, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { connect } from "react-redux";
@@ -8,7 +8,6 @@ import { TextField } from "formik-material-ui";
 import * as actions from "../../Store/Actions";
 
 import { isMobile } from "react-device-detect";
-import CustomSnackbar from "../CustomSnackbar/CustomSnackbar";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -43,7 +42,6 @@ const RecoverSchema = Yup.object().shape({
 });
 
 const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
-	const [showSnackbar, setShowSnackbar] = useState(false);
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -61,7 +59,6 @@ const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
 						validationSchema={RecoverSchema}
 						onSubmit={async (values, { setSubmitting }) => {
 							await recoverPassword(values);
-							setShowSnackbar(true);
 							setSubmitting(false);
 						}}
 					>
@@ -103,13 +100,6 @@ const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
 					</Formik>
 				</Paper>
 			</div>
-			<CustomSnackbar
-				show={showSnackbar}
-				error={error}
-				loading={loading}
-				closeSnackbar={() => setShowSnackbar(false)}
-				message="Password reset email has been sent to the email provided"
-			/>
 		</>
 	);
 };

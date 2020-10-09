@@ -14,3 +14,5 @@ export {
 export { addPatient } from "./patientActions";
 
 export { toggleDarkMode, updateTheme } from "./themeActions";
+
+export { closeSnackbar } from "./snackbarActions";

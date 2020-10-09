@@ -7,12 +7,12 @@ import {
 	Divider,
 	makeStyles,
 	Modal,
-	TextField,
 	Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
+import { TextField } from "formik-material-ui";
 import * as Yup from "yup";
 
 import * as actions from "../../Store/Actions";
@@ -56,9 +56,7 @@ const PatientSchema = Yup.object().shape({
 	species: Yup.string().required("You must enter the species of the animal"),
 });
 
-const CustomTextInput = ({ field, ...props }) => <TextField {...field} {...props} />;
-
-const NewPatient = ({ handleShowSuccessSnackbar, addPatient, loading, error }) => {
+const NewPatient = ({ addPatient, loading, error }) => {
 	const [showModal, setShowModal] = useState(false);
 	const classes = useStyles();
 	return (
@@ -80,7 +78,6 @@ const NewPatient = ({ handleShowSuccessSnackbar, addPatient, loading, error }) =
 							setSubmitting(false);
 							if (res) {
 								setShowModal(false);
-								handleShowSuccessSnackbar();
 							}
 							resetForm();
 						}}
@@ -95,74 +92,44 @@ const NewPatient = ({ handleShowSuccessSnackbar, addPatient, loading, error }) =
 													New Patient
 												</Typography>
 												<Field
-													component={CustomTextInput}
+													component={TextField}
 													label="Name"
 													type="text"
 													variant="outlined"
 													name="name"
 													className={classes.textField}
 												/>
-												<ErrorMessage
-													name="name"
-													component={Typography}
-													variant="body2"
-													className={classes.errorMessage}
-												/>
 												<Field
-													component={CustomTextInput}
+													component={TextField}
 													label="Status"
 													type="text"
 													variant="outlined"
 													name="status"
 													className={classes.textField}
 												/>
-												<ErrorMessage
-													name="status"
-													component={Typography}
-													variant="body2"
-													className={classes.errorMessage}
-												/>
 												<Field
-													component={CustomTextInput}
+													component={TextField}
 													label="Species"
 													type="text"
 													variant="outlined"
 													name="species"
 													className={classes.textField}
 												/>
-												<ErrorMessage
-													name="species"
-													component={Typography}
-													variant="body2"
-													className={classes.errorMessage}
-												/>
 												<Field
-													component={CustomTextInput}
+													component={TextField}
 													label="Colour"
 													type="text"
 													variant="outlined"
 													name="colour"
 													className={classes.textField}
 												/>
-												<ErrorMessage
-													name="colour"
-													component={Typography}
-													variant="body2"
-													className={classes.errorMessage}
-												/>
 												<Field
-													component={CustomTextInput}
+													component={TextField}
 													label="Rescuer"
 													type="text"
 													variant="outlined"
 													name="rescuer"
 													className={classes.textField}
-												/>
-												<ErrorMessage
-													name="rescuer"
-													component={Typography}
-													variant="body2"
-													className={classes.errorMessage}
 												/>
 												<Typography variant="body1" className={classes.errorMessage}>
 													{error}
