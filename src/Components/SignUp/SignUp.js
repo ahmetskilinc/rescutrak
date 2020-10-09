@@ -114,7 +114,7 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 										<Field
 											component={TextField}
 											label="Rescue Name"
-											autoComplete="username"
+											autoComplete="nickname"
 											type="text"
 											variant="outlined"
 											name="rescueName"
