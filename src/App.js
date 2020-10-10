@@ -9,7 +9,7 @@ import Login from "./Components/Login/Login";
 import Logout from "./Components/Logout/Logout";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Components/Home/Home";
-// import Patients from "./Components/Patients/Patients";
+import Patients from "./Components/Patients/Patients";
 import Profile from "./Components/Profile/Profile";
 import ProfileEdit from "./Components/Profile/ProfileEdit";
 import { Button, CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
@@ -81,7 +81,7 @@ function App({
 		routes = (
 			<Switch>
 				<Route exact path="/" component={Home} />
-				{/*<Route exact path="/patients" component={Patients} />*/}
+				<Route exact path="/patients" component={Patients} />
 				<Route exact path="/profile" component={Profile} />
 				<Route exact path="/profile/edit" component={ProfileEdit} />
 				<Route exact path="/logout" component={Logout} />

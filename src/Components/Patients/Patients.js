@@ -1,8 +1,19 @@
-import { makeStyles, Typography } from "@material-ui/core";
+import {
+	Button,
+	CircularProgress,
+	makeStyles,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography,
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
+import { useFirestoreConnect } from "react-redux-firebase";
 import NewPatient from "../NewPatient/NewPatient";
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +25,59 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Patients = () => {
+const Patients = ({ userId, firestoreData, requesting, requested }) => {
+	useFirestoreConnect([
+		{
+			collection: "patients",
+			doc: userId,
+			subcollections: [{ collection: "patients" }],
+			storeAs: "patients",
+		},
+	]);
+	const Content = () => {
+		if (requested !== false && requesting !== true && firestoreData.patients) {
+			if (firestoreData.patients.length < 1) {
+				return <Typography>Nothing to see here</Typography>;
+			} else {
+				return (
+					<TableContainer component={Paper}>
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>Name</TableCell>
+									<TableCell>Status</TableCell>
+									<TableCell>Species</TableCell>
+									<TableCell>Colour</TableCell>
+									<TableCell>Actions</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{firestoreData.patients.map((patient) => (
+									<TableRow key={patient.id}>
+										<TableCell>{patient.name}</TableCell>
+										<TableCell>{patient.status}</TableCell>
+										<TableCell>{patient.species}</TableCell>
+										<TableCell>{patient.colour}</TableCell>
+										<TableCell>
+											<Button variant="contained" color="primary">
+												View
+											</Button>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+				);
+			}
+		} else {
+			return (
+				<div className="spinnerWrapper">
+					<CircularProgress className={classes.progress} />
+				</div>
+			);
+		}
+	};
 	const classes = useStyles();
 	return (
 		<>
@@ -22,20 +85,18 @@ const Patients = () => {
 				<Typography variant="h4">All patients</Typography>
 				<NewPatient />
 			</div>
+			<Content />
 		</>
 	);
 };
 
 const mapStateToProps = ({ firebase, firestore }) => ({
 	userId: firebase.auth.uid,
-	patients: firestore.ordered.patients,
+	firestoreData: firestore.ordered,
 	requesting: firestore.status.requesting,
 	requested: firestore.status.requested,
 });
 
 const mapDispatchToProps = {};
 
-export default compose(
-	connect(mapStateToProps, mapDispatchToProps),
-	firestoreConnect((props) => [`patients/${props.userId}/patients`])
-)(Patients);
+export default connect(mapStateToProps, mapDispatchToProps)(Patients);
