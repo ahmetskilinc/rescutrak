@@ -10,7 +10,7 @@ This is a small project a friend of mine had the idea of creating. After creatin
 2. Setup [Firebase](https://firebase.google.com/) with Firestore, Database, Storage and Authentication(email and password).
 3. Add `.env.local` to the root folder and add `REACT_APP_APIKEY` with your Firebase API Key.
 4. Update the `src/firebase.js` file shown below.
-   ![firebase.js](./images/firebasejs.png)
+   <img src="./images/firebasejs.png" height="120px"/>
 5. Run `npm start` in your terminal from the root folder
 
 ## What I Used:
@@ -24,15 +24,38 @@ This is a small project a friend of mine had the idea of creating. After creatin
 
 ## Some Screenshots:
 
-### Patients Table Screen:
-![Patients Table Screen](./images/patients.png)
-### Login Screen:
-![Login Screen](./images/login.png)
-### Signup Screen:
-![Sign Up Screen](./images/signUp.png)
-### Profile Screen:
-![Profile Screen](./images/profile.png)
-### Profile Edit/Change Theme Screen:
-![Profile Edit/Change Theme Screen](./images/changeTheme.png)
-### Snackbar Example:
-![Snackbar Example](./images/snackbarExample.png)
+<p align="center">
+	Patients Table Screen:
+	<br />
+	<img src="./images/patients.png" width="460px" />
+</p>
+
+<p align="center">
+	Login Screen:
+	<br />
+	<img src="./images/login.png" width="460px" />
+</p>
+
+<p align="center">
+	Signup Screen:
+	<br />
+	<img src="./images/signUp.png" width="460px" />
+</p>
+
+<p align="center">
+	Profile Screen:
+	<br />
+	<img src="./images/profile.png" width="460px" />
+</p>
+
+<p align="center">
+	Profile Edit/Change Theme Screen:
+	<br />
+	<img src="./images/profileEdit.png" width="460px" />
+</p>
+
+<p align="center">
+	Snackbar Example:
+	<br />
+	<img src="./images/snackbarExample.png" height="60px" />
+</p>
