@@ -24,6 +24,8 @@ This is a small project a friend of mine had the idea of creating. After creatin
 
 ## Some Screenshots:
 
+### Patients Table Screen:
+![Patients Table Screen](./images/patients.png)
 ### Login Screen:
 ![Login Screen](./images/login.png)
 ### Signup Screen:
