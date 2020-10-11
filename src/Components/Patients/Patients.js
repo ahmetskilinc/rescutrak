@@ -1,6 +1,6 @@
 import {
-	Button,
 	CircularProgress,
+	IconButton,
 	makeStyles,
 	Paper,
 	Table,
@@ -11,10 +11,12 @@ import {
 	TableRow,
 	Typography,
 } from "@material-ui/core";
-import React from "react";
+import LaunchRoundedIcon from "@material-ui/icons/LaunchRounded";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 import NewPatient from "../NewPatient/NewPatient";
+import ViewPatient from "../ViewPatient/ViewPatient";
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -26,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Patients = ({ userId, firestoreData, requesting, requested }) => {
+	const [currentViewPatient, setCurrentViewPatient] = useState(null);
+	const [showViewPatientModal, setShowViewPatientModal] = useState(false);
 	useFirestoreConnect([
 		{
 			collection: "patients",
@@ -34,40 +38,60 @@ const Patients = ({ userId, firestoreData, requesting, requested }) => {
 			storeAs: "patients",
 		},
 	]);
+
+	const showPatientModal = (patient) => {
+		setCurrentViewPatient(patient);
+		setShowViewPatientModal(true);
+	};
+
+	const closePatientModal = () => {
+		setCurrentViewPatient(null);
+		setShowViewPatientModal(false);
+	};
+
 	const Content = () => {
 		if (requested !== false && requesting !== true && firestoreData.patients) {
 			if (firestoreData.patients.length < 1) {
 				return <Typography>Nothing to see here</Typography>;
 			} else {
 				return (
-					<TableContainer component={Paper}>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell>Name</TableCell>
-									<TableCell>Status</TableCell>
-									<TableCell>Species</TableCell>
-									<TableCell>Colour</TableCell>
-									<TableCell>Actions</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{firestoreData.patients.map((patient) => (
-									<TableRow key={patient.id}>
-										<TableCell>{patient.name}</TableCell>
-										<TableCell>{patient.status}</TableCell>
-										<TableCell>{patient.species}</TableCell>
-										<TableCell>{patient.colour}</TableCell>
-										<TableCell>
-											<Button variant="contained" color="primary">
-												View
-											</Button>
-										</TableCell>
+					<>
+						<TableContainer component={Paper}>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell>Name</TableCell>
+										<TableCell>Status</TableCell>
+										<TableCell>Species</TableCell>
+										<TableCell>Colour</TableCell>
+										<TableCell>Actions</TableCell>
 									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
+								</TableHead>
+								<TableBody>
+									{firestoreData.patients.map((patient) => (
+										<TableRow key={patient.id}>
+											<TableCell>{patient.name}</TableCell>
+											<TableCell>{patient.status}</TableCell>
+											<TableCell>{patient.species}</TableCell>
+											<TableCell>{patient.colour}</TableCell>
+											<TableCell>
+												<IconButton onClick={() => showPatientModal(patient)}>
+													<LaunchRoundedIcon />
+												</IconButton>
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+						{showViewPatientModal && (
+							<ViewPatient
+								showModal={showViewPatientModal}
+								patient={currentViewPatient}
+								close={closePatientModal}
+							/>
+						)}
+					</>
 				);
 			}
 		} else {

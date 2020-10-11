@@ -154,16 +154,9 @@ const ProfileEdit = ({
 	firebase,
 	editProfile,
 	editProfileLoading,
-	editProfileError,
 	cleanUp,
 	deleteAccount,
-	deleteProfileLoading,
-	deleteProfileError,
-	passwordResetEmailError,
-	passwordResetEmailLoading,
 	sendPasswordResetEmail,
-	profilePhotoLoading,
-	profilePhotoError,
 	uploadPhoto,
 	updateTheme,
 }) => {
@@ -477,7 +470,7 @@ const ProfileEdit = ({
 						</Typography>
 						<Typography gutterBottom>We don't want to see you go!</Typography>
 					</CardContent>
-					<Divider className={classes.divider} />
+					<Divider />
 					<CardActions className={classes.cardContent}>
 						<DangerButton color="secondary" variant="contained" onClick={handleDeleteAccount}>
 							Delete my account
@@ -495,13 +488,6 @@ const ProfileEdit = ({
 const mapStateToProps = ({ firebase, auth }) => ({
 	firebase,
 	editProfileLoading: auth.profileEdit.loading,
-	editProfileError: auth.profileEdit.error,
-	deleteProfileLoading: auth.deleteAccount.loading,
-	deleteProfileError: auth.deleteAccount.error,
-	passwordResetEmailLoading: auth.passwordResetEmail.loading,
-	passwordResetEmailError: auth.passwordResetEmail.error,
-	profilePhotoLoading: auth.profilePhoto.loading,
-	profilePhotoError: auth.profilePhoto.error,
 });
 
 const mapDispatchToProps = {

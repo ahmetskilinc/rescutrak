@@ -69,8 +69,10 @@ const NewPatient = ({ addPatient, loading, error }) => {
 					<Formik
 						initialValues={{
 							name: "",
+							status: "",
 							species: "",
-							dateOut: "",
+							colour: "",
+							rescuer: "",
 						}}
 						validationSchema={PatientSchema}
 						onSubmit={async (values, { setSubmitting, resetForm }) => {
