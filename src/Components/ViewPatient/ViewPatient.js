@@ -17,9 +17,15 @@ import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
+import { DatePicker } from "formik-material-ui-pickers";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 import * as Yup from "yup";
 import * as actions from "../../Store/Actions";
 import { connect } from "react-redux";
+
+import { useSelector } from "react-redux";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 const useStyles = makeStyles((theme) => ({
 	root: { width: 345 },
@@ -51,9 +57,21 @@ const PatientSchema = Yup.object().shape({
 	species: Yup.string().required("You must enter the species of the animal"),
 });
 
-const ViewPatient = ({ showModal, patient, close, updatePatient }) => {
+const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, deletePatient }) => {
 	const [editPatient, setEditPatient] = useState(false);
 	const classes = useStyles();
+
+	useFirestoreConnect([
+		{
+			collection: "patients",
+			doc: userId,
+			subcollections: [{ collection: "patients" }],
+			storeAs: "patients",
+		},
+	]);
+
+	const patient = useSelector(({ firestore: { data } }) => data.patients && data.patients[patientId]);
+
 	return (
 		<Modal disablePortal disableEnforceFocus disableAutoFocus open={showModal} className={classes.modal}>
 			<Card className={classes.root}>
@@ -69,101 +87,102 @@ const ViewPatient = ({ showModal, patient, close, updatePatient }) => {
 
 				{editPatient ? (
 					<>
-						<Formik
-							initialValues={{
-								name: patient.name,
-								status: patient.status,
-								species: patient.species,
-								dateAdded: patient.dateAdded,
-								dateOut: patient.dateOut,
-								colour: patient.colour,
-								rescuer: patient.rescuer,
-							}}
-							validationSchema={PatientSchema}
-							onSubmit={async (values, { setSubmitting, resetForm }) => {
-								setSubmitting(false);
-								updatePatient(values, patient.id);
-								setEditPatient(false);
-							}}
-						>
-							{({ isSubmitting, isValid }) => {
-								if (!isSubmitting) {
-									return (
-										<Form>
-											<CardContent>
-												<Field
-													component={TextField}
-													label="Name"
-													type="text"
-													variant="outlined"
-													name="name"
-													className={classes.textField}
-												/>
-												<Field
-													component={TextField}
-													label="Status"
-													type="text"
-													variant="outlined"
-													name="status"
-													className={classes.textField}
-												/>
-												<Field
-													component={TextField}
-													label="Species"
-													type="text"
-													variant="outlined"
-													name="species"
-													className={classes.textField}
-												/>
+						<MuiPickersUtilsProvider utils={DateFnsUtils}>
+							<Formik
+								initialValues={{
+									name: patient.name,
+									status: patient.status,
+									species: patient.species,
+									dateAdded: new Date(patient.dateAdded.toDate()),
+									dateOut: new Date(patient.dateOut.toDate()),
+									colour: patient.colour,
+									rescuer: patient.rescuer,
+								}}
+								validationSchema={PatientSchema}
+								onSubmit={async (values, { setSubmitting, resetForm }) => {
+									setSubmitting(false);
+									console.log(values, patientId);
+									updatePatient(values, patientId);
+									setEditPatient(false);
+								}}
+							>
+								{({ isSubmitting, isValid }) => {
+									if (!isSubmitting) {
+										return (
+											<Form>
+												<CardContent>
+													<Field
+														component={TextField}
+														label="Name"
+														type="text"
+														variant="outlined"
+														name="name"
+														className={classes.textField}
+													/>
+													<Field
+														component={TextField}
+														label="Status"
+														type="text"
+														variant="outlined"
+														name="status"
+														className={classes.textField}
+													/>
+													<Field
+														component={TextField}
+														label="Species"
+														type="text"
+														variant="outlined"
+														name="species"
+														className={classes.textField}
+													/>
 
-												<Field
-													component={TextField}
-													label="Date Added"
-													type="text"
-													variant="outlined"
-													name="dateAdded"
-													className={classes.textField}
-												/>
+													<Field
+														component={DatePicker}
+														label="Date Added"
+														variant="outlined"
+														name="dateAdded"
+														className={classes.textField}
+													/>
 
-												<Field
-													component={TextField}
-													label="Date Discharged"
-													type="text"
-													variant="outlined"
-													name="dateOut"
-													className={classes.textField}
-												/>
+													<Field
+														component={DatePicker}
+														label="Date Discharged"
+														variant="outlined"
+														name="dateOut"
+														className={classes.textField}
+													/>
 
-												<Field
-													component={TextField}
-													label="Colour"
-													type="text"
-													variant="outlined"
-													name="colour"
-													className={classes.textField}
-												/>
-												<Field
-													component={TextField}
-													label="Rescuer"
-													type="text"
-													variant="outlined"
-													name="rescuer"
-													className={classes.textField}
-												/>
-											</CardContent>
-											<Divider />
-											<CardActions disableSpacing>
-												<IconButton type="submit" color="primary">
-													<SaveRoundedIcon />
-												</IconButton>
-											</CardActions>
-										</Form>
-									);
-								} else if (isSubmitting) {
-									return <CircularProgress className={classes.progress} />;
-								}
-							}}
-						</Formik>
+													<Field
+														component={TextField}
+														label="Colour"
+														type="text"
+														variant="outlined"
+														name="colour"
+														className={classes.textField}
+													/>
+													<Field
+														component={TextField}
+														label="Rescuer"
+														type="text"
+														variant="outlined"
+														name="rescuer"
+														className={classes.textField}
+													/>
+												</CardContent>
+												<Divider />
+												<CardActions disableSpacing>
+													<IconButton type="submit" color="primary">
+														<SaveRoundedIcon />
+													</IconButton>
+												</CardActions>
+											</Form>
+										);
+									} else if (isSubmitting) {
+										return <CircularProgress className={classes.progress} />;
+									}
+								}}
+							</Formik>
+						</MuiPickersUtilsProvider>
 					</>
 				) : (
 					<>
@@ -175,10 +194,10 @@ const ViewPatient = ({ showModal, patient, close, updatePatient }) => {
 								Status: {patient.status}
 							</Typography>
 							<Typography variant="body2" color="textSecondary" component="p">
-								Date Added: {patient.dateAdded}
+								Date Added: {new Date(patient.dateAdded.toDate()).toDateString()}
 							</Typography>
 							<Typography variant="body2" color="textSecondary" component="p">
-								Date Discharged: {patient.dateOut ? patient.dateOut : ""}
+								Date Discharged: {new Date(patient.dateOut.toDate()).toDateString()}
 							</Typography>
 							<Typography variant="body2" color="textSecondary" component="p">
 								Rescuer: {patient.rescuer}
@@ -189,7 +208,13 @@ const ViewPatient = ({ showModal, patient, close, updatePatient }) => {
 							<IconButton aria-label="share" onClick={() => setEditPatient(true)}>
 								<EditRoundedIcon />
 							</IconButton>
-							<IconButton aria-label="share">
+							<IconButton
+								aria-label="share"
+								onClick={() => {
+									deletePatient(patientId);
+									close();
+								}}
+							>
 								<DeleteForeverRoundedIcon />
 							</IconButton>
 						</CardActions>
@@ -200,13 +225,18 @@ const ViewPatient = ({ showModal, patient, close, updatePatient }) => {
 	);
 };
 
-const mapStateToProps = ({ patient }) => ({
+const mapStateToProps = ({ patient, firestore, firebase }) => ({
 	loading: patient.loading,
 	error: patient.error,
+	userId: firebase.auth.uid,
+	firestoreData: firestore.ordered,
+	requesting: firestore.status.requesting,
+	requested: firestore.status.requested,
 });
 
 const mapDispatchToProps = {
 	updatePatient: actions.editPatient,
+	deletePatient: actions.deletePatient,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewPatient);

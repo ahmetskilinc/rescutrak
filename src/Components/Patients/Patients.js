@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import LaunchRoundedIcon from "@material-ui/icons/LaunchRounded";
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 import NewPatient from "../NewPatient/NewPatient";
 import ViewPatient from "../ViewPatient/ViewPatient";
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Patients = ({ userId, firestoreData, requesting, requested }) => {
+const Patients = ({ userId, requesting, requested }) => {
 	const [currentViewPatient, setCurrentViewPatient] = useState(null);
 	const [showViewPatientModal, setShowViewPatientModal] = useState(false);
 	useFirestoreConnect([
@@ -39,8 +39,10 @@ const Patients = ({ userId, firestoreData, requesting, requested }) => {
 		},
 	]);
 
+	const patients = useSelector(({ firestore: { ordered } }) => ordered.patients);
+
 	const showPatientModal = (patient) => {
-		setCurrentViewPatient(patient);
+		setCurrentViewPatient(patient.id);
 		setShowViewPatientModal(true);
 	};
 
@@ -50,8 +52,8 @@ const Patients = ({ userId, firestoreData, requesting, requested }) => {
 	};
 
 	const Content = () => {
-		if (requested !== false && requesting !== true && firestoreData.patients) {
-			if (firestoreData.patients.length < 1) {
+		if (requested !== false && requesting !== true && patients) {
+			if (patients.length < 1) {
 				return <Typography>Nothing to see here</Typography>;
 			} else {
 				return (
@@ -68,7 +70,7 @@ const Patients = ({ userId, firestoreData, requesting, requested }) => {
 									</TableRow>
 								</TableHead>
 								<TableBody>
-									{firestoreData.patients.map((patient) => (
+									{patients.map((patient) => (
 										<TableRow key={patient.id}>
 											<TableCell>{patient.name}</TableCell>
 											<TableCell>{patient.status}</TableCell>
@@ -87,8 +89,8 @@ const Patients = ({ userId, firestoreData, requesting, requested }) => {
 						{showViewPatientModal && (
 							<ViewPatient
 								showModal={showViewPatientModal}
-								patient={currentViewPatient}
 								close={closePatientModal}
+								patientId={currentViewPatient}
 							/>
 						)}
 					</>
@@ -116,7 +118,6 @@ const Patients = ({ userId, firestoreData, requesting, requested }) => {
 
 const mapStateToProps = ({ firebase, firestore }) => ({
 	userId: firebase.auth.uid,
-	firestoreData: firestore.ordered,
 	requesting: firestore.status.requesting,
 	requested: firestore.status.requested,
 });
