@@ -23,9 +23,25 @@ export const signUp = (data) => async (dispatch, getState, { getFirebase }) => {
 				fileUrl: "",
 			});
 			dispatch({ type: actions.AUTH_SUCCESS });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "success",
+					snackbarMessage: `${data.firstName} your account has been created successfully!`,
+				},
+			});
 		})
 		.catch((error) => {
 			dispatch({ type: actions.AUTH_FAIL, payload: error.message });
+			dispatch({
+				type: actions.OPEN_SNACKBAR,
+				payload: {
+					snackbarOpen: true,
+					snackbarType: "error",
+					snackbarMessage: error.message,
+				},
+			});
 		});
 };
 
