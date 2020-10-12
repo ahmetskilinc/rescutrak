@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 const Patients = ({ userId, requesting, requested }) => {
 	const [currentViewPatient, setCurrentViewPatient] = useState(null);
 	const [showViewPatientModal, setShowViewPatientModal] = useState(false);
+
 	useFirestoreConnect([
 		{
 			collection: "patients",

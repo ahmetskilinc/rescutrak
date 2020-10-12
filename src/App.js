@@ -4,19 +4,21 @@ import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-d
 import "./App.css";
 import * as actions from "./Store/Actions";
 
-import NavBar from "./Components/NavBar/NavBar";
-import Login from "./Components/Login/Login";
-import Logout from "./Components/Logout/Logout";
-import SignUp from "./Components/SignUp/SignUp";
-import Home from "./Components/Home/Home";
-import Patients from "./Components/Patients/Patients";
-import Profile from "./Components/Profile/Profile";
-import ProfileEdit from "./Components/Profile/ProfileEdit";
+import {
+	Home,
+	Profile,
+	NavBar,
+	Login,
+	Logout,
+	SignUp,
+	Patients,
+	ProfileEdit,
+	CustomSnackbar,
+	RecoverPassword,
+} from "./Components/";
 import { Button, CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
-import RecoverPassword from "./Components/RecoverPassword/RecoverPassword";
 import { Alert } from "@material-ui/lab";
-import CustomSnackbar from "./Components/CustomSnackbar/CustomSnackbar";
 
 const useStyles = makeStyles((theme) => ({
 	verificationAlert: {
@@ -82,6 +84,7 @@ function App({
 			<Switch>
 				<Route exact path="/" component={Home} />
 				<Route exact path="/patients" component={Patients} />
+				<Route exact path="/patients/:when" component={Patients} />
 				<Route exact path="/profile" component={Profile} />
 				<Route exact path="/profile/edit" component={ProfileEdit} />
 				<Route exact path="/logout" component={Logout} />

@@ -72,13 +72,12 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 							repeatPassword: "",
 						}}
 						validationSchema={SignupSchema}
-						onSubmit={async (values, { setSubmitting }) => {
+						onSubmit={async (values) => {
 							await signUp(values);
-							setSubmitting(false);
 						}}
 					>
 						{({ isSubmitting, isValid }) => {
-							if (!isSubmitting) {
+							if (!loading) {
 								return (
 									<Form className={classes.formContainer}>
 										<Typography variant="h5" gutterBottom>
@@ -152,7 +151,7 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 										</Link>
 									</Form>
 								);
-							} else if (isSubmitting || loading) {
+							} else {
 								return (
 									<div className="spinnerWrapper">
 										<CircularProgress className={classes.progress} />

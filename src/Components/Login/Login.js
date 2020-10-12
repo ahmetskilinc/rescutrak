@@ -60,13 +60,12 @@ const Login = ({ login, loading, error, cleanUp }) => {
 					<Formik
 						initialValues={{ email: "", password: "" }}
 						validationSchema={LoginSchema}
-						onSubmit={async (values, { setSubmitting }) => {
+						onSubmit={async (values) => {
 							await login(values);
-							setSubmitting(false);
 						}}
 					>
-						{({ isSubmitting, isValid }) => {
-							if (!isSubmitting) {
+						{({ isValid }) => {
+							if (!loading) {
 								return (
 									<Form className={classes.formContainer}>
 										<Typography variant="h5" gutterBottom>
@@ -107,7 +106,7 @@ const Login = ({ login, loading, error, cleanUp }) => {
 										</Link>
 									</Form>
 								);
-							} else if (isSubmitting || loading) {
+							} else {
 								return (
 									<div className="spinnerWrapper">
 										<CircularProgress className={classes.progress} />

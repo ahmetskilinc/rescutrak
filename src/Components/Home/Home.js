@@ -7,6 +7,7 @@ import { Skeleton } from "@material-ui/lab";
 const Home = ({ rescueName, loaded }) => (
 	<Typography variant="h4">{loaded ? `Hello, ${rescueName}` : <Skeleton width="260px" height="62px" />}</Typography>
 );
+
 const mapStateToProps = ({ firebase }) => ({
 	rescueName: firebase.profile.rescueName,
 	loaded: firebase.profile.isLoaded,
