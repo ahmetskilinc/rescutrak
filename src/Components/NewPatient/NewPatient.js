@@ -15,7 +15,7 @@ import { Formik, Form, Field } from "formik";
 import { TextField } from "formik-material-ui";
 import * as Yup from "yup";
 
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 const useStyles = makeStyles((theme) => ({
 	card: {

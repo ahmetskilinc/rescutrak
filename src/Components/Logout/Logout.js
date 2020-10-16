@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 const Logout = ({ logout }) => {
 	useEffect(() => {

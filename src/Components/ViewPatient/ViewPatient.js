@@ -21,7 +21,7 @@ import { DatePicker } from "formik-material-ui-pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import * as Yup from "yup";
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 import { connect } from "react-redux";
 
 import { useSelector } from "react-redux";

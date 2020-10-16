@@ -4,7 +4,7 @@ import { getFirebase } from "react-redux-firebase";
 import thunk from "redux-thunk";
 import { getFirestore } from "redux-firestore";
 
-import firebase from "../firebase";
+import firebase from "src/firebase";
 import rootReducer from "./Reducers";
 
 const composeEnhancers =

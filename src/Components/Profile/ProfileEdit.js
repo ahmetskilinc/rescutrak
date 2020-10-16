@@ -25,7 +25,7 @@ import * as Yup from "yup";
 
 import { Select, TextField } from "formik-material-ui";
 
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 import { isMobile } from "react-device-detect";
 import { red } from "@material-ui/core/colors";

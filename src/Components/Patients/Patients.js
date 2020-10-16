@@ -15,8 +15,7 @@ import LaunchRoundedIcon from "@material-ui/icons/LaunchRounded";
 import React, { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
-import NewPatient from "../NewPatient/NewPatient";
-import ViewPatient from "../ViewPatient/ViewPatient";
+import { NewPatient, ViewPatient } from "components";
 
 const useStyles = makeStyles((theme) => ({
 	header: {

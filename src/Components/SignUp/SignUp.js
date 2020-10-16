@@ -6,7 +6,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TextField } from "formik-material-ui";
 
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 import { isMobile } from "react-device-detect";
 

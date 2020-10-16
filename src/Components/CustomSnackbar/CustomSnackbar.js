@@ -2,7 +2,7 @@ import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { connect } from "react-redux";
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 const CustomSnackbar = ({ snackbarOpen, snackbarMessage, snackbarType, closeSnackbar }) => {
 	const handleClose = (event, reason) => {

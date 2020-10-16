@@ -29,7 +29,8 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"serve-prod": "react-scripts build && serve -s build",
-		"deploy": "react-scripts build && firebase deploy --only hosting"
+		"deploy": "react-scripts build && firebase deploy --only hosting",
+		"postinstall": "link-module-alias"
 	},
 	"browserslist": {
 		"production": [
@@ -42,5 +43,15 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"link-module-alias": "^1.2.0"
+	},
+	"_moduleAliases": {
+		"root"			:".",
+		"src"			:"./src",
+		"components"	:"./src/Components",
+		"store"			:"./src/Store",
+		"actions"		:"./src/Store/Actions"
 	}
 }

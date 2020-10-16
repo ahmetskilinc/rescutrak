@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { connect } from "react-redux";
 import { TextField } from "formik-material-ui";
 
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 import { isMobile } from "react-device-detect";
 

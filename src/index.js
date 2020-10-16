@@ -8,7 +8,7 @@ import * as serviceWorker from "./serviceWorker";
 import { ReactReduxFirebaseProvider, isLoaded } from "react-redux-firebase";
 
 import { Provider } from "react-redux";
-import { store, rrfProps } from "./Store";
+import { store, rrfProps } from "store";
 import { CircularProgress } from "@material-ui/core";
 
 const root = document.getElementById("root");

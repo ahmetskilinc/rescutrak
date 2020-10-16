@@ -8,7 +8,7 @@ import { Avatar, Button, IconButton, Menu, MenuItem, Switch } from "@material-ui
 
 import { connect } from "react-redux";
 
-import * as actions from "../../Store/Actions";
+import * as actions from "actions";
 
 const NavBar = ({ loggedIn, toggleDarkMode, darkState, profileLoaded, usersName, profilePhoto }) => {
 	const [anchorEl, setAnchorEl] = useState(null);

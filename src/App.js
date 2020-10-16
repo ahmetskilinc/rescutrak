@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import "./App.css";
-import * as actions from "./Store/Actions";
+import * as actions from "actions";
 
 import {
 	Home,
@@ -15,10 +15,10 @@ import {
 	ProfileEdit,
 	CustomSnackbar,
 	RecoverPassword,
-} from "./Components/";
-import { Button, CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
+	EmailVerificationAlert,
+} from "components";
+import { CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
-import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
 	verificationAlert: {
@@ -32,19 +32,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function App({
-	loggedIn,
-	darkState,
-	emailVerified,
-	sendVerification,
-	verificationLoading,
-	verificationError,
-	primaryColor,
-	secondaryColor,
-	profileLoaded,
-	profileEmpty,
-	cleanUp,
-}) {
+function App({ loggedIn, darkState, emailVerified, primaryColor, secondaryColor, profileLoaded, profileEmpty }) {
 	let theme;
 	if (profileLoaded && profileEmpty === false) {
 		theme = createMuiTheme({
@@ -73,10 +61,6 @@ function App({
 	}
 
 	const classes = useStyles();
-
-	const handleVerificationEmail = () => {
-		sendVerification();
-	};
 
 	let routes;
 	if (loggedIn) {
@@ -110,25 +94,7 @@ function App({
 						<CssBaseline />
 						<NavBar />
 						<div className="wrapper">
-							{loggedIn && !emailVerified && (
-								<div className={classes.verificationAlert}>
-									<Alert
-										variant="filled"
-										severity="warning"
-										action={
-											verificationLoading ? (
-												<CircularProgress color="inherit" />
-											) : (
-												<Button color="inherit" onClick={handleVerificationEmail}>
-													{isMobile ? "Resend Email" : "Resend verification email"}
-												</Button>
-											)
-										}
-									>
-										Your email has not been verified. Please verify your email!
-									</Alert>
-								</div>
-							)}
+							{loggedIn && !emailVerified && <EmailVerificationAlert />}
 							<div className={classes.routesWrapper}>{routes}</div>
 						</div>
 						<CustomSnackbar />
@@ -147,18 +113,13 @@ const mapStateToProps = ({ firebase, auth }) => ({
 	loggedIn: firebase.auth.uid ? true : false,
 	darkState: firebase.profile.darkMode,
 	emailVerified: firebase.auth.uid ? firebase.auth.emailVerified : null,
-	verificationLoading: auth.verifyEmail.loading,
-	verificationError: auth.verifyEmail.error,
-
 	profileLoaded: firebase.profile.isLoaded,
 	profileEmpty: firebase.profile.isEmpty,
-
 	primaryColor: firebase.profile.primaryColor,
 	secondaryColor: firebase.profile.secondaryColor,
 });
 
 const mapDispatchToProps = {
-	sendVerification: actions.verifyEmail,
 	cleanUp: actions.clean,
 };
 
