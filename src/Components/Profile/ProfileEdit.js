@@ -8,27 +8,25 @@ import {
 	CardContent,
 	CircularProgress,
 	Divider,
-	FormControl,
-	InputLabel,
+	FormControlLabel,
 	makeStyles,
-	MenuItem,
 	Modal,
+	Radio,
 	Typography,
 	withStyles,
 } from "@material-ui/core";
-import { blue, cyan, deepOrange, green, indigo, orange, pink } from "@material-ui/core/colors";
+import { blue, cyan, deepOrange, green, indigo, orange, pink, red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { connect } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { Select, TextField } from "formik-material-ui";
+import { RadioGroup, TextField } from "formik-material-ui";
 
 import * as actions from "actions";
 
 import { isMobile } from "react-device-detect";
-import { red } from "@material-ui/core/colors";
 import { DropzoneDialog } from "material-ui-dropzone";
 
 const DangerButton = withStyles((theme) => ({
@@ -83,57 +81,57 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: theme.typography.pxToRem(15),
 		flexShrink: 0,
 	},
-	selectInput: {
-		marginTop: theme.spacing(2),
-		minWidth: 200,
+
+	themeForm: {
+		display: "flex",
 	},
 
 	blue: {
-		backgroundColor: blue[500],
+		color: blue[500],
 		"&:hover": {
-			backgroundColor: blue[700],
+			color: blue[700],
 		},
 	},
 	red: {
-		backgroundColor: red[500],
+		color: red[500],
 		"&:hover": {
-			backgroundColor: red[700],
+			color: red[700],
 		},
 	},
 	orange: {
-		backgroundColor: orange[500],
+		color: orange[500],
 		"&:hover": {
-			backgroundColor: orange[700],
+			color: orange[700],
 		},
 	},
 	deepOrange: {
-		backgroundColor: deepOrange[500],
+		color: deepOrange[500],
 		"&:hover": {
-			backgroundColor: deepOrange[700],
+			color: deepOrange[700],
 		},
 	},
 	indigo: {
-		backgroundColor: indigo[500],
+		color: indigo[500],
 		"&:hover": {
-			backgroundColor: indigo[700],
+			color: indigo[700],
 		},
 	},
 	cyan: {
-		backgroundColor: cyan[500],
+		color: cyan[500],
 		"&:hover": {
-			backgroundColor: cyan[700],
+			color: cyan[700],
 		},
 	},
 	green: {
-		backgroundColor: green[500],
+		color: green[500],
 		"&:hover": {
-			backgroundColor: green[700],
+			color: green[700],
 		},
 	},
 	pink: {
-		backgroundColor: pink[500],
+		color: pink[500],
 		"&:hover": {
-			backgroundColor: pink[700],
+			color: pink[700],
 		},
 	},
 }));
@@ -325,74 +323,132 @@ const ProfileEdit = ({
 								if (!isSubmitting) {
 									return (
 										<Form>
-											<FormControl className={classes.selectInput}>
-												<InputLabel id="select-primary">Primary Colour</InputLabel>
+											<div className={classes.themeForm}>
 												<Field
-													labelId="select-primary"
-													component={Select}
-													variant="outlined"
+													component={RadioGroup}
 													name="primaryColor"
+													className={classes.selectInput}
 												>
-													<MenuItem value="#00bcd4" className={classes.cyan}>
-														Cyan
-													</MenuItem>
-													<MenuItem value="#4caf50" className={classes.green}>
-														Green
-													</MenuItem>
-													<MenuItem value="#2196f3" className={classes.blue}>
-														Blue
-													</MenuItem>
-													<MenuItem value="#f44336" className={classes.red}>
-														Red
-													</MenuItem>
-													<MenuItem value="#3f51b5" className={classes.indigo}>
-														Indigo
-													</MenuItem>
-													<MenuItem value="#ff9800" className={classes.orange}>
-														Orange
-													</MenuItem>
-													<MenuItem value="#ff5722" className={classes.deepOrange}>
-														Deep Orange
-													</MenuItem>
-													<MenuItem value="#e91e63" className={classes.pink}>
-														Pink
-													</MenuItem>
+													<FormControlLabel
+														className={classes.cyan}
+														value="#00bcd4"
+														control={<Radio disabled={isSubmitting} />}
+														label="Cyan"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														className={classes.green}
+														value="#4caf50"
+														control={<Radio disabled={isSubmitting} />}
+														label="Green"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														className={classes.blue}
+														value="#2196f3"
+														control={<Radio disabled={isSubmitting} />}
+														label="Blue"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#f44336"
+														className={classes.red}
+														control={<Radio disabled={isSubmitting} />}
+														label="Red"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#3f51b5"
+														className={classes.indigo}
+														control={<Radio disabled={isSubmitting} />}
+														label="Indigo"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#ff9800"
+														className={classes.orange}
+														control={<Radio disabled={isSubmitting} />}
+														label="Orange"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#ff5722"
+														className={classes.deepOrange}
+														control={<Radio disabled={isSubmitting} />}
+														label="Deep Orange"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#e91e63"
+														className={classes.pink}
+														control={<Radio disabled={isSubmitting} />}
+														label="Pink"
+														disabled={isSubmitting}
+													/>
 												</Field>
-											</FormControl>
-											<FormControl className={classes.selectInput}>
-												<InputLabel id="select-primary">Secondary Colour</InputLabel>
 												<Field
-													labelId="select-primary"
-													component={Select}
-													variant="outlined"
+													component={RadioGroup}
 													name="secondaryColor"
+													className={classes.selectInput}
 												>
-													<MenuItem value="#00bcd4" className={classes.cyan}>
-														Cyan
-													</MenuItem>
-													<MenuItem value="#4caf50" className={classes.green}>
-														Green
-													</MenuItem>
-													<MenuItem value="#2196f3" className={classes.blue}>
-														Blue
-													</MenuItem>
-													<MenuItem value="#f44336" className={classes.red}>
-														Red
-													</MenuItem>
-													<MenuItem value="#3f51b5" className={classes.indigo}>
-														Indigo
-													</MenuItem>
-													<MenuItem value="#ff9800" className={classes.orange}>
-														Orange
-													</MenuItem>
-													<MenuItem value="#ff5722" className={classes.deepOrange}>
-														Deep Orange
-													</MenuItem>
-													<MenuItem value="#e91e63" className={classes.pink}>
-														Pink
-													</MenuItem>
+													<FormControlLabel
+														className={classes.cyan}
+														value="#00bcd4"
+														control={<Radio disabled={isSubmitting} />}
+														label="Cyan"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														className={classes.green}
+														value="#4caf50"
+														control={<Radio disabled={isSubmitting} />}
+														label="Green"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														className={classes.blue}
+														value="#2196f3"
+														control={<Radio disabled={isSubmitting} />}
+														label="Blue"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#f44336"
+														className={classes.red}
+														control={<Radio disabled={isSubmitting} />}
+														label="Red"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#3f51b5"
+														className={classes.indigo}
+														control={<Radio disabled={isSubmitting} />}
+														label="Indigo"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#ff9800"
+														className={classes.orange}
+														control={<Radio disabled={isSubmitting} />}
+														label="Orange"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#ff5722"
+														className={classes.deepOrange}
+														control={<Radio disabled={isSubmitting} />}
+														label="Deep Orange"
+														disabled={isSubmitting}
+													/>
+													<FormControlLabel
+														value="#e91e63"
+														className={classes.pink}
+														control={<Radio disabled={isSubmitting} />}
+														label="Pink"
+														disabled={isSubmitting}
+													/>
 												</Field>
-											</FormControl>
+											</div>
 											<Divider className={classes.divider} />
 											<Button
 												variant="contained"

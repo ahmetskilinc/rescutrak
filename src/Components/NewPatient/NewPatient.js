@@ -8,11 +8,14 @@ import {
 	makeStyles,
 	Modal,
 	Typography,
+	MenuItem,
+	InputLabel,
+	FormControl,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
-import { TextField } from "formik-material-ui";
+import { TextField, Select } from "formik-material-ui";
 import * as Yup from "yup";
 
 import * as actions from "actions";
@@ -82,6 +85,7 @@ const NewPatient = ({ addPatient, loading, error }) => {
 								setShowModal(false);
 							}
 							resetForm();
+							// console.log(values);
 						}}
 					>
 						{({ isSubmitting, isValid }) => {
@@ -101,14 +105,20 @@ const NewPatient = ({ addPatient, loading, error }) => {
 													name="name"
 													className={classes.textField}
 												/>
-												<Field
-													component={TextField}
-													label="Status"
-													type="text"
-													variant="outlined"
-													name="status"
-													className={classes.textField}
-												/>
+												<FormControl variant="outlined" className={classes.textField}>
+													<InputLabel>Status</InputLabel>
+													<Field component={Select} name="status" label="Status">
+														<MenuItem value="none">
+															<em>None</em>
+														</MenuItem>
+														<MenuItem value="recovery">Recovery</MenuItem>
+														<MenuItem value="medication">Medication</MenuItem>
+														<MenuItem value="icu">Intensive Care</MenuItem>
+														<MenuItem value="released">Released</MenuItem>
+														<MenuItem value="deceased">Deceased</MenuItem>
+														<MenuItem value="unreleasable">Unreleasable</MenuItem>
+													</Field>
+												</FormControl>
 												<Field
 													component={TextField}
 													label="Species"

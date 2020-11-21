@@ -1,8 +1,14 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Typography, Card, CardContent } from "@material-ui/core";
 import { connect } from "react-redux";
 
-const Home = ({ rescueName, loaded }) => <Typography variant="h4">{loaded ? `Hello, ${rescueName}` : ""}</Typography>;
+const Home = ({ rescueName, loaded }) => (
+	<Card>
+		<CardContent>
+			<Typography color="textSecondary">{loaded ? `Hello, ${rescueName}` : ""}</Typography>
+		</CardContent>
+	</Card>
+);
 
 const mapStateToProps = ({ firebase }) => ({
 	rescueName: firebase.profile.rescueName,

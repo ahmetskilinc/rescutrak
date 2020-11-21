@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "space-between",
 		paddingBottom: theme.spacing(2),
 	},
+	typographyCenter: {
+		textAlign: "center",
+	},
 }));
 
 const Patients = ({ userId, requesting, requested }) => {
@@ -54,7 +57,11 @@ const Patients = ({ userId, requesting, requested }) => {
 	const Content = () => {
 		if (requested !== false && requesting !== true && patients) {
 			if (patients.length < 1) {
-				return <Typography>Nothing to see here</Typography>;
+				return (
+					<Typography className={classes.typographyCenter} variant="h5" component="h5">
+						Nothing to see here
+					</Typography>
+				);
 			} else {
 				return (
 					<>

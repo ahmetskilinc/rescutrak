@@ -8,7 +8,9 @@ import {
 	IconButton,
 	makeStyles,
 	Modal,
-	Typography,
+	MenuItem,
+	InputLabel,
+	FormControl,
 } from "@material-ui/core";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
@@ -16,7 +18,7 @@ import SaveRoundedIcon from "@material-ui/icons/SaveRounded";
 import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
-import { TextField } from "formik-material-ui";
+import { TextField, Select } from "formik-material-ui";
 import { DatePicker } from "formik-material-ui-pickers";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -58,7 +60,7 @@ const PatientSchema = Yup.object().shape({
 });
 
 const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, deletePatient }) => {
-	const [editPatient, setEditPatient] = useState(false);
+	const [editPatientDisabled, setEditPatientDisabled] = useState(true);
 	const classes = useStyles();
 
 	useFirestoreConnect([
@@ -77,15 +79,14 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 			<Card className={classes.root}>
 				<CardHeader
 					action={
-						<IconButton aria-label="close" onClick={close} disabled={editPatient}>
+						<IconButton aria-label="close" onClick={close} disabled={!editPatientDisabled}>
 							<CancelRoundedIcon />
 						</IconButton>
 					}
 					title={patient.name}
-					subheader={patient.species}
 				/>
 
-				{editPatient ? (
+				{
 					<>
 						<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<Formik
@@ -103,7 +104,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 									setSubmitting(false);
 									console.log(values, patientId);
 									updatePatient(values, patientId);
-									setEditPatient(false);
+									setEditPatientDisabled(true);
 								}}
 							>
 								{({ isSubmitting, isValid }) => {
@@ -113,22 +114,35 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 												<CardContent>
 													<Field
 														component={TextField}
+														disabled={editPatientDisabled}
 														label="Name"
 														type="text"
 														variant="outlined"
 														name="name"
 														className={classes.textField}
 													/>
+													<FormControl variant="outlined" className={classes.textField}>
+														<InputLabel>Status</InputLabel>
+														<Field
+															component={Select}
+															disabled={editPatientDisabled}
+															name="status"
+															label="Status"
+														>
+															<MenuItem value="none">
+																<em>None</em>
+															</MenuItem>
+															<MenuItem value="recovery">Recovery</MenuItem>
+															<MenuItem value="medication">Medication</MenuItem>
+															<MenuItem value="icu">Intensive Care</MenuItem>
+															<MenuItem value="released">Released</MenuItem>
+															<MenuItem value="deceased">Deceased</MenuItem>
+															<MenuItem value="unreleasable">Unreleasable</MenuItem>
+														</Field>
+													</FormControl>
 													<Field
 														component={TextField}
-														label="Status"
-														type="text"
-														variant="outlined"
-														name="status"
-														className={classes.textField}
-													/>
-													<Field
-														component={TextField}
+														disabled={editPatientDisabled}
 														label="Species"
 														type="text"
 														variant="outlined"
@@ -138,6 +152,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 
 													<Field
 														component={DatePicker}
+														disabled={editPatientDisabled}
 														label="Date Added"
 														variant="outlined"
 														name="dateAdded"
@@ -146,6 +161,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 
 													<Field
 														component={DatePicker}
+														disabled={editPatientDisabled}
 														label="Date Discharged"
 														variant="outlined"
 														name="dateOut"
@@ -154,6 +170,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 
 													<Field
 														component={TextField}
+														disabled={editPatientDisabled}
 														label="Colour"
 														type="text"
 														variant="outlined"
@@ -162,6 +179,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 													/>
 													<Field
 														component={TextField}
+														disabled={editPatientDisabled}
 														label="Rescuer"
 														type="text"
 														variant="outlined"
@@ -170,10 +188,32 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 													/>
 												</CardContent>
 												<Divider />
-												<CardActions disableSpacing>
-													<IconButton type="submit" color="primary">
-														<SaveRoundedIcon />
-													</IconButton>
+												<CardActions>
+													{editPatientDisabled ? (
+														<IconButton
+															color="primary"
+															onClick={(e) => {
+																e.preventDefault();
+																setEditPatientDisabled(false);
+															}}
+														>
+															<EditRoundedIcon />
+														</IconButton>
+													) : (
+														<>
+															<IconButton type="submit" color="primary">
+																<SaveRoundedIcon />
+															</IconButton>
+															<IconButton
+																onClick={() => {
+																	deletePatient(patientId);
+																	close();
+																}}
+															>
+																<DeleteForeverRoundedIcon />
+															</IconButton>
+														</>
+													)}
 												</CardActions>
 											</Form>
 										);
@@ -184,42 +224,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 							</Formik>
 						</MuiPickersUtilsProvider>
 					</>
-				) : (
-					<>
-						<CardContent>
-							<Typography variant="body2" color="textSecondary" component="p">
-								Colour: {patient.colour}
-							</Typography>
-							<Typography variant="body2" color="textSecondary" component="p">
-								Status: {patient.status}
-							</Typography>
-							<Typography variant="body2" color="textSecondary" component="p">
-								Date Added: {new Date(patient.dateAdded.toDate()).toDateString()}
-							</Typography>
-							<Typography variant="body2" color="textSecondary" component="p">
-								Date Discharged: {new Date(patient.dateOut.toDate()).toDateString()}
-							</Typography>
-							<Typography variant="body2" color="textSecondary" component="p">
-								Rescuer: {patient.rescuer}
-							</Typography>
-						</CardContent>
-						<Divider />
-						<CardActions disableSpacing>
-							<IconButton aria-label="share" onClick={() => setEditPatient(true)}>
-								<EditRoundedIcon />
-							</IconButton>
-							<IconButton
-								aria-label="share"
-								onClick={() => {
-									deletePatient(patientId);
-									close();
-								}}
-							>
-								<DeleteForeverRoundedIcon />
-							</IconButton>
-						</CardActions>
-					</>
-				)}
+				}
 			</Card>
 		</Modal>
 	);
