@@ -8,17 +8,11 @@ import {
 	makeStyles,
 	Modal,
 	Typography,
-	MenuItem,
-	InputLabel,
-	FormControl,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
-import { TextField, Select } from "formik-material-ui";
+import { TextField } from "formik-material-ui";
 import * as Yup from "yup";
-
-import * as actions from "actions";
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -54,38 +48,27 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const PatientSchema = Yup.object().shape({
-	name: Yup.string().required("You must enter a name for the animal"),
-	species: Yup.string().required("You must enter the species of the animal"),
-});
+const PatientSchema = Yup.object().shape({});
 
-const NewPatient = ({ addPatient, loading, error }) => {
+const FilterModal = ({ setFilterRescuer, error }) => {
 	const [showModal, setShowModal] = useState(false);
 	const classes = useStyles();
 	return (
 		<>
-			<Button variant="contained" color="secondary" onClick={() => setShowModal(true)}>
-				Add Patient
+			<Button color="secondary" onClick={() => setShowModal(true)}>
+				Filter
 			</Button>
 			<Modal open={showModal} className={classes.modal}>
 				<>
 					<Formik
 						initialValues={{
-							name: "",
-							status: "",
-							species: "",
-							colour: "",
 							rescuer: "",
 						}}
 						validationSchema={PatientSchema}
 						onSubmit={async (values, { setSubmitting, resetForm }) => {
-							const res = addPatient(values);
-							setSubmitting(false);
-							if (res) {
-								setShowModal(false);
-							}
+							setShowModal(false);
+							setFilterRescuer(values.rescuer);
 							resetForm();
-							// console.log(values);
 						}}
 					>
 						{({ isSubmitting, isValid }) => {
@@ -95,46 +78,9 @@ const NewPatient = ({ addPatient, loading, error }) => {
 										<Card className={classes.card}>
 											<CardContent className={classes.cardContent}>
 												<Typography variant="h5" gutterBottom>
-													New Patient
+													Filter Patients
 												</Typography>
-												<Field
-													component={TextField}
-													label="Name"
-													type="text"
-													variant="outlined"
-													name="name"
-													className={classes.textField}
-												/>
-												<FormControl variant="outlined" className={classes.textField}>
-													<InputLabel>Status</InputLabel>
-													<Field component={Select} name="status" label="Status">
-														<MenuItem value="none">
-															<em>None</em>
-														</MenuItem>
-														<MenuItem value="recovery">Recovery</MenuItem>
-														<MenuItem value="medication">Medication</MenuItem>
-														<MenuItem value="icu">Intensive Care</MenuItem>
-														<MenuItem value="released">Released</MenuItem>
-														<MenuItem value="deceased">Deceased</MenuItem>
-														<MenuItem value="unreleasable">Unreleasable</MenuItem>
-													</Field>
-												</FormControl>
-												<Field
-													component={TextField}
-													label="Species"
-													type="text"
-													variant="outlined"
-													name="species"
-													className={classes.textField}
-												/>
-												<Field
-													component={TextField}
-													label="Colour"
-													type="text"
-													variant="outlined"
-													name="colour"
-													className={classes.textField}
-												/>
+												{/* TODO: Finish forms for filtering */}
 												<Field
 													component={TextField}
 													label="Rescuer"
@@ -155,7 +101,7 @@ const NewPatient = ({ addPatient, loading, error }) => {
 													type="submit"
 													disabled={!isValid}
 												>
-													Add Patient
+													Filter
 												</Button>
 												<Button
 													variant="contained"
@@ -179,13 +125,4 @@ const NewPatient = ({ addPatient, loading, error }) => {
 	);
 };
 
-const mapStateToProps = ({ patient }) => ({
-	loading: patient.loading,
-	error: patient.error,
-});
-
-const mapDispatchToProps = {
-	addPatient: actions.addPatient,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewPatient);
+export default FilterModal;

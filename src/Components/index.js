@@ -11,3 +11,4 @@ export { default as RecoverPassword } from "./RecoverPassword/RecoverPassword";
 export { default as NewPatient } from "./NewPatient/NewPatient";
 export { default as ViewPatient } from "./ViewPatient/ViewPatient";
 export { default as EmailVerificationAlert } from "./EmailVerificationAlert/EmailVerificationAlert";
+export { default as FilterModal } from "./Patients/FilterModal";

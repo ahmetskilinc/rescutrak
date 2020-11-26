@@ -41,7 +41,7 @@ const RecoverSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid email address!").required("The email is required!"),
 });
 
-const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
+const RecoverPassword = ({ recoverPassword, loading, cleanUp }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -53,18 +53,18 @@ const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
 	return (
 		<>
 			<div className={classes.root}>
-				<Paper className={classes.paperContainer}>
-					<Formik
-						initialValues={{ email: "" }}
-						validationSchema={RecoverSchema}
-						onSubmit={async (values, { setSubmitting }) => {
-							await recoverPassword(values);
-							setSubmitting(false);
-						}}
-					>
-						{({ isSubmitting, isValid }) => {
-							if (!isSubmitting) {
-								return (
+				<Formik
+					initialValues={{ email: "" }}
+					validationSchema={RecoverSchema}
+					onSubmit={async (values, { setSubmitting }) => {
+						await recoverPassword(values);
+						setSubmitting(false);
+					}}
+				>
+					{({ isSubmitting, isValid }) => {
+						if (!isSubmitting) {
+							return (
+								<Paper className={classes.paperContainer}>
 									<Form className={classes.formContainer}>
 										<Typography variant="h5" gutterBottom>
 											Password recovery
@@ -88,17 +88,17 @@ const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
 											Send reset email
 										</Button>
 									</Form>
-								);
-							} else if (isSubmitting || loading) {
-								return (
-									<div className="spinnerWrapper">
-										<CircularProgress className={classes.progress} />
-									</div>
-								);
-							}
-						}}
-					</Formik>
-				</Paper>
+								</Paper>
+							);
+						} else if (isSubmitting || loading) {
+							return (
+								<div className="spinnerWrapper">
+									<CircularProgress className={classes.progress} />
+								</div>
+							);
+						}
+					}}
+				</Formik>
 			</div>
 		</>
 	);
@@ -106,7 +106,6 @@ const RecoverPassword = ({ recoverPassword, loading, error, cleanUp }) => {
 
 const mapStateToProps = ({ auth }) => ({
 	loading: auth.forgotten.loading,
-	error: auth.forgotten.error,
 });
 
 const mapDispatchToProps = {

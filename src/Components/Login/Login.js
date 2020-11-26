@@ -44,7 +44,7 @@ const LoginSchema = Yup.object().shape({
 	password: Yup.string().required("The password is required"),
 });
 
-const Login = ({ login, loading, error, cleanUp }) => {
+const Login = ({ login, loading, cleanUp }) => {
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -56,17 +56,17 @@ const Login = ({ login, loading, error, cleanUp }) => {
 	return (
 		<>
 			<div className={classes.root}>
-				<Paper className={classes.paperContainer}>
-					<Formik
-						initialValues={{ email: "", password: "" }}
-						validationSchema={LoginSchema}
-						onSubmit={async (values) => {
-							await login(values);
-						}}
-					>
-						{({ isValid }) => {
-							if (!loading) {
-								return (
+				<Formik
+					initialValues={{ email: "", password: "" }}
+					validationSchema={LoginSchema}
+					onSubmit={async (values) => {
+						await login(values);
+					}}
+				>
+					{({ isValid }) => {
+						if (!loading) {
+							return (
+								<Paper className={classes.paperContainer}>
 									<Form className={classes.formContainer}>
 										<Typography variant="h5" gutterBottom>
 											Login
@@ -105,17 +105,17 @@ const Login = ({ login, loading, error, cleanUp }) => {
 											I've forgotten my password
 										</Link>
 									</Form>
-								);
-							} else {
-								return (
-									<div className="spinnerWrapper">
-										<CircularProgress className={classes.progress} />
-									</div>
-								);
-							}
-						}}
-					</Formik>
-				</Paper>
+								</Paper>
+							);
+						} else {
+							return (
+								<div className="spinnerWrapper">
+									<CircularProgress className={classes.progress} />
+								</div>
+							);
+						}
+					}}
+				</Formik>
 			</div>
 		</>
 	);
@@ -123,7 +123,6 @@ const Login = ({ login, loading, error, cleanUp }) => {
 
 const mapStateToProps = ({ auth }) => ({
 	loading: auth.loading,
-	error: auth.error,
 });
 
 const mapDispatchToProps = {

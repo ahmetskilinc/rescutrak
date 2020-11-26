@@ -1,11 +1,18 @@
-import { Avatar, Card, CardContent, CardHeader, IconButton, makeStyles, Typography } from "@material-ui/core";
+import {
+	Avatar,
+	Card,
+	CardContent,
+	CardHeader,
+	IconButton,
+	makeStyles,
+	Typography,
+	CircularProgress,
+} from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
-import FakeProfile from "./FakeProfile";
 
 const useStyles = makeStyles((theme) => ({
 	card: {
@@ -58,7 +65,7 @@ const Profile = ({ rescueName, userProfile, userAuth, emailVerified, loaded, pro
 			</div>
 		);
 	} else {
-		return <FakeProfile />;
+		return <CircularProgress />;
 	}
 };
 

@@ -30,7 +30,7 @@ import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 
 const useStyles = makeStyles((theme) => ({
-	root: { width: 345 },
+	root: { width: 440 },
 	cardContent: {
 		padding: theme.spacing(2),
 	},
@@ -102,8 +102,10 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 								validationSchema={PatientSchema}
 								onSubmit={async (values, { setSubmitting, resetForm }) => {
 									setSubmitting(false);
+									// if (values !== initialValues) {
 									console.log(values, patientId);
 									updatePatient(values, patientId);
+									// }
 									setEditPatientDisabled(true);
 								}}
 							>
@@ -154,7 +156,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 														component={DatePicker}
 														disabled={editPatientDisabled}
 														label="Date Added"
-														variant="outlined"
+														inputVariant="outlined"
 														name="dateAdded"
 														className={classes.textField}
 													/>
@@ -163,7 +165,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 														component={DatePicker}
 														disabled={editPatientDisabled}
 														label="Date Discharged"
-														variant="outlined"
+														inputVariant="outlined"
 														name="dateOut"
 														className={classes.textField}
 													/>

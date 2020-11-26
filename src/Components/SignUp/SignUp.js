@@ -51,7 +51,7 @@ const SignupSchema = Yup.object().shape({
 		.oneOf([Yup.ref("password"), null], "Passwords don't match up"),
 });
 
-const SignUp = ({ signUp, loading, error, cleanUp }) => {
+const SignUp = ({ signUp, loading, cleanUp }) => {
 	const classes = useStyles();
 	useEffect(() => {
 		return () => {
@@ -61,24 +61,24 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 	return (
 		<>
 			<div className={classes.root}>
-				<Paper className={classes.paperContainer}>
-					<Formik
-						initialValues={{
-							firstName: "",
-							lastName: "",
-							email: "",
-							rescueName: "",
-							password: "",
-							repeatPassword: "",
-						}}
-						validationSchema={SignupSchema}
-						onSubmit={async (values) => {
-							await signUp(values);
-						}}
-					>
-						{({ isSubmitting, isValid }) => {
-							if (!loading) {
-								return (
+				<Formik
+					initialValues={{
+						firstName: "",
+						lastName: "",
+						email: "",
+						rescueName: "",
+						password: "",
+						repeatPassword: "",
+					}}
+					validationSchema={SignupSchema}
+					onSubmit={async (values) => {
+						await signUp(values);
+					}}
+				>
+					{({ isSubmitting, isValid }) => {
+						if (!loading) {
+							return (
+								<Paper className={classes.paperContainer}>
 									<Form className={classes.formContainer}>
 										<Typography variant="h5" gutterBottom>
 											SignUp
@@ -150,17 +150,17 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 											I have an account
 										</Link>
 									</Form>
-								);
-							} else {
-								return (
-									<div className="spinnerWrapper">
-										<CircularProgress className={classes.progress} />
-									</div>
-								);
-							}
-						}}
-					</Formik>
-				</Paper>
+								</Paper>
+							);
+						} else {
+							return (
+								<div className="spinnerWrapper">
+									<CircularProgress className={classes.progress} />
+								</div>
+							);
+						}
+					}}
+				</Formik>
 			</div>
 		</>
 	);
@@ -168,7 +168,6 @@ const SignUp = ({ signUp, loading, error, cleanUp }) => {
 
 const mapStateToProps = ({ auth }) => ({
 	loading: auth.loading,
-	error: auth.error,
 });
 
 const mapDispatchToProps = {

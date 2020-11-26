@@ -15,7 +15,7 @@ import LaunchRoundedIcon from "@material-ui/icons/LaunchRounded";
 import React, { useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { NewPatient, ViewPatient } from "components";
+import { NewPatient, ViewPatient, FilterModal } from "components";
 
 const useStyles = makeStyles((theme) => ({
 	header: {
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 const Patients = ({ userId, requesting, requested }) => {
 	const [currentViewPatient, setCurrentViewPatient] = useState(null);
 	const [showViewPatientModal, setShowViewPatientModal] = useState(false);
+	const [filterRescuer, setFilterRescuer] = useState(null);
 
 	useFirestoreConnect([
 		{
@@ -42,7 +43,17 @@ const Patients = ({ userId, requesting, requested }) => {
 		},
 	]);
 
-	const patients = useSelector(({ firestore: { ordered } }) => ordered.patients);
+	let patients = useSelector(({ firestore: { ordered } }) => ordered.patients);
+	// TODO: Finish filter method
+	if (filterRescuer && patients) {
+		patients = patients.filter((patient) =>
+			patient.rescuer.toLocaleLowerCase().includes(filterRescuer.toLocaleLowerCase())
+		);
+	}
+
+	// if (patients) {
+	// 	console.log(patients);
+	// }
 
 	const showPatientModal = (patient) => {
 		setCurrentViewPatient(patient.id);
@@ -116,7 +127,10 @@ const Patients = ({ userId, requesting, requested }) => {
 		<>
 			<div className={classes.header}>
 				<Typography variant="h4">All patients</Typography>
-				<NewPatient />
+				<div>
+					<FilterModal setFilterRescuer={setFilterRescuer} />
+					<NewPatient />
+				</div>
 			</div>
 			<Content />
 		</>
