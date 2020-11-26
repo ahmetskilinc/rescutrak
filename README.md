@@ -8,7 +8,7 @@ This is a small project a friend of mine had the idea of creating. After creatin
 
 -   [x] Authentication (with profile photo, edit profile/account and delete account)
 -   [x] CRUD of a patient/animal
--   [ ] Display tables of patients/animals with filtering
+-   [x] Display tables of patients/animals with filtering
 -   [x] Coloured themes sync across devices
 -   [x] Dark/light mode sync across devices
 
