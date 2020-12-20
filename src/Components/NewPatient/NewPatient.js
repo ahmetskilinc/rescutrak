@@ -11,8 +11,11 @@ import {
 	MenuItem,
 	InputLabel,
 	FormControl,
+	CardHeader,
+	IconButton,
 } from "@material-ui/core";
 import React, { useState } from "react";
+import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
 import { connect } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import { TextField, Select } from "formik-material-ui";
@@ -68,35 +71,40 @@ const NewPatient = ({ addPatient, loading, error }) => {
 				Add Patient
 			</Button>
 			<Modal open={showModal} className={classes.modal}>
-				<>
-					<Formik
-						initialValues={{
-							name: "",
-							status: "",
-							species: "",
-							colour: "",
-							rescuer: "",
-						}}
-						validationSchema={PatientSchema}
-						onSubmit={async (values, { setSubmitting, resetForm }) => {
-							const res = addPatient(values);
-							setSubmitting(false);
-							if (res) {
-								setShowModal(false);
-							}
-							resetForm();
-							// console.log(values);
-						}}
-					>
-						{({ isSubmitting, isValid }) => {
-							if (!isSubmitting) {
-								return (
-									<Form>
-										<Card className={classes.card}>
+				<Card className={classes.card}>
+					<CardHeader
+						action={
+							<IconButton aria-label="close" onClick={() => setShowModal(false)}>
+								<CancelRoundedIcon />
+							</IconButton>
+						}
+						title="New Patient"
+					/>
+					<>
+						<Formik
+							initialValues={{
+								name: "",
+								status: "",
+								species: "",
+								colour: "",
+								rescuer: "",
+							}}
+							validationSchema={PatientSchema}
+							onSubmit={async (values, { setSubmitting, resetForm }) => {
+								const res = addPatient(values);
+								setSubmitting(false);
+								if (res) {
+									setShowModal(false);
+								}
+								resetForm();
+								// console.log(values);
+							}}
+						>
+							{({ isSubmitting, isValid }) => {
+								if (!isSubmitting) {
+									return (
+										<Form>
 											<CardContent className={classes.cardContent}>
-												<Typography variant="h5" gutterBottom>
-													New Patient
-												</Typography>
 												<Field
 													component={TextField}
 													label="Name"
@@ -165,15 +173,15 @@ const NewPatient = ({ addPatient, loading, error }) => {
 													Cancel
 												</Button>
 											</CardActions>
-										</Card>
-									</Form>
-								);
-							} else if (isSubmitting) {
-								return <CircularProgress className={classes.progress} />;
-							}
-						}}
-					</Formik>
-				</>
+										</Form>
+									);
+								} else if (isSubmitting) {
+									return <CircularProgress className={classes.progress} />;
+								}
+							}}
+						</Formik>
+					</>
+				</Card>
 			</Modal>
 		</>
 	);

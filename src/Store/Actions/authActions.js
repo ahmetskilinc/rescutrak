@@ -225,22 +225,23 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 	await user
 		.delete()
 		.then(() => {
-			// firebase
-			// 	.firestore()
-			// 	.collection("users")
-			// 	.doc(user.uid)
-			// 	.delete()
-			// 	.then(() => {
-			dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
-			dispatch({
-				type: actions.OPEN_SNACKBAR,
-				payload: {
-					snackbarOpen: true,
-					snackbarType: "warning",
-					snackbarMessage: "Account deleted",
-				},
-			});
-			// });
+			// TODO: finish deleting profile
+			firebase
+				.firestore()
+				.collection("users")
+				.doc(user.uid)
+				.delete()
+				.then(() => {
+					dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
+					dispatch({
+						type: actions.OPEN_SNACKBAR,
+						payload: {
+							snackbarOpen: true,
+							snackbarType: "warning",
+							snackbarMessage: "Account deleted",
+						},
+					});
+				});
 		})
 		.catch((err) => {
 			dispatch({ type: actions.DELETE_ACCOUNT_FAIL, payload: err.message });

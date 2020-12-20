@@ -79,7 +79,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 			<Card className={classes.root}>
 				<CardHeader
 					action={
-						<IconButton aria-label="close" onClick={close} disabled={!editPatientDisabled}>
+						<IconButton aria-label="close" onClick={close}>
 							<CancelRoundedIcon />
 						</IconButton>
 					}
