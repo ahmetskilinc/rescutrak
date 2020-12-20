@@ -225,7 +225,6 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 	await user
 		.delete()
 		.then(() => {
-			// TODO: finish deleting profile
 			firebase
 				.firestore()
 				.collection("users")
@@ -233,14 +232,6 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 				.delete()
 				.then(() => {
 					dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
-					dispatch({
-						type: actions.OPEN_SNACKBAR,
-						payload: {
-							snackbarOpen: true,
-							snackbarType: "warning",
-							snackbarMessage: "Account deleted",
-						},
-					});
 				});
 		})
 		.catch((err) => {
