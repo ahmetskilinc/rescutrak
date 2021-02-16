@@ -30,7 +30,8 @@
 		"start": "react-scripts start",
 		"serve-prod": "react-scripts build && serve -s build",
 		"deploy": "link-module-alias && react-scripts build && firebase deploy --only hosting",
-		"postinstall": "link-module-alias"
+		"postinstall": "link-module-alias",
+		"react-build": "link-module-alias && react-scripts build"
 	},
 	"browserslist": {
 		"production": [
