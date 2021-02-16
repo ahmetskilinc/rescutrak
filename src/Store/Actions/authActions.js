@@ -225,21 +225,7 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 	await user
 		.delete()
 		.then(() => {
-			await firebase
-				.firestore()
-				.collection("patients")
-				.doc(user.uid)
-				.delete()
-				.then(() => {
-					await firebase
-						.firestore()
-						.collection("users")
-						.doc(user.uid)
-						.delete()
-						.then(() => {
-							dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
-						});
-				});
+			dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
 		})
 		.catch((err) => {
 			dispatch({ type: actions.DELETE_ACCOUNT_FAIL, payload: err.message });
@@ -251,6 +237,24 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 					snackbarMessage: err.message,
 				},
 			});
+		});
+	await firebase
+		.firestore()
+		.collection("patients")
+		.doc(user.uid)
+		.delete()
+		.then(() => {
+			firebase
+				.firestore()
+				.collection("users")
+				.doc(user.uid)
+				.delete()
+				.then(() => {
+					// dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		});
 };
 
