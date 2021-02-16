@@ -225,13 +225,20 @@ export const deleteAccount = () => async (dispatch, getState, { getFirebase }) =
 	await user
 		.delete()
 		.then(() => {
-			firebase
+			await firebase
 				.firestore()
-				.collection("users")
+				.collection("patients")
 				.doc(user.uid)
 				.delete()
 				.then(() => {
-					dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
+					await firebase
+						.firestore()
+						.collection("users")
+						.doc(user.uid)
+						.delete()
+						.then(() => {
+							dispatch({ type: actions.DELETE_ACCOUNT_SUCCESS });
+						});
 				});
 		})
 		.catch((err) => {
