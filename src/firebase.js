@@ -5,7 +5,7 @@ import "firebase/storage";
 import "firebase/database";
 
 var config = {
-	apiKey: process.env.FIRESTORE_API_TOKEN,
+	apiKey: process.env.REACT_APP_FIRESTORE_API_TOKEN,
 	authDomain: "rescutrak.firebaseapp.com",
 	databaseURL: "https://rescutrak.firebaseio.com",
 	projectId: "rescutrak",
@@ -19,7 +19,5 @@ firebase.initializeApp(config);
 firebase.firestore();
 firebase.storage();
 firebase.database();
-
-console.log(config);
 
 export default firebase;
