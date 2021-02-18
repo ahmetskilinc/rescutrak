@@ -20,4 +20,6 @@ firebase.firestore();
 firebase.storage();
 firebase.database();
 
+console.log(config);
+
 export default firebase;
