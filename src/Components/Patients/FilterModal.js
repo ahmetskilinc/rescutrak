@@ -64,6 +64,7 @@ const FilterModal = ({ setFilterRescuer, error }) => {
 						initialValues={{
 							rescuer: "",
 						}}
+						isInitialValid={false}
 						validationSchema={PatientSchema}
 						onSubmit={async (values, { setSubmitting, resetForm }) => {
 							setShowModal(false);

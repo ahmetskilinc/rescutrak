@@ -208,6 +208,7 @@ const ProfileEdit = ({
 								email: firebase.auth.email,
 								rescueName: firebase.profile.rescueName,
 							}}
+							isInitialValid={false}
 							validationSchema={UpdateSchema}
 							onSubmit={async (values, { setSubmitting }) => {
 								editProfile(values);
@@ -313,6 +314,7 @@ const ProfileEdit = ({
 								primaryColor: firebase.profile.primaryColor,
 								secondaryColor: firebase.profile.secondaryColor,
 							}}
+							isInitialValid={false}
 							validationSchema={ThemeSchema}
 							onSubmit={async (values, { setSubmitting }) => {
 								updateTheme(values);

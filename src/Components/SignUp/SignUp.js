@@ -70,6 +70,7 @@ const SignUp = ({ signUp, loading, cleanUp }) => {
 						password: "",
 						repeatPassword: "",
 					}}
+					isInitialValid={false}
 					validationSchema={SignupSchema}
 					onSubmit={async (values) => {
 						await signUp(values);

@@ -58,6 +58,7 @@ const Login = ({ login, loading, cleanUp }) => {
 			<div className={classes.root}>
 				<Formik
 					initialValues={{ email: "", password: "" }}
+					isInitialValid={false}
 					validationSchema={LoginSchema}
 					onSubmit={async (values) => {
 						await login(values);
