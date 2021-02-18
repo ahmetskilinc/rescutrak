@@ -11,17 +11,22 @@ jobs:
     name: Build and Deploy
     runs-on: [ubuntu-latest]
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Install dependencies
-        run: npm install
-      - name: Run tests
-        run: npm test
-      - name: Build
-        run: npm run react-build
-      - name: Deploy to firebase
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy
-        env: 
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_DEBUG: false
+        envkey_REACT_API_KEY: ${{ secrets.REACT_APP_APIKEY }}
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Run tests
+      run: npm test
+    - name: Build
+      run: npm run react-build
+    - name: Deploy to firebase
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy
+      env: 
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
