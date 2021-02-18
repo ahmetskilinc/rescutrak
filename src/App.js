@@ -109,7 +109,7 @@ function App({ loggedIn, darkState, emailVerified, primaryColor, secondaryColor,
 	);
 }
 
-const mapStateToProps = ({ firebase, auth }) => ({
+const mapStateToProps = ({ firebase }) => ({
 	loggedIn: firebase.auth.uid ? true : false,
 	darkState: firebase.profile.darkMode,
 	emailVerified: firebase.auth.uid ? firebase.auth.emailVerified : null,

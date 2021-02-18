@@ -89,7 +89,7 @@ const NewPatient = ({ addPatient, loading, error }) => {
 								colour: "",
 								rescuer: "",
 							}}
-							isInitialValid={false}
+							validateOnMount={true}
 							validationSchema={PatientSchema}
 							onSubmit={async (values, { setSubmitting, resetForm }) => {
 								const res = addPatient(values);

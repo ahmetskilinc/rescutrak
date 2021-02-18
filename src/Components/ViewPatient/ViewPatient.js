@@ -99,7 +99,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 									colour: patient.colour,
 									rescuer: patient.rescuer,
 								}}
-								isInitialValid={false}
+								validateOnMount={true}
 								validationSchema={PatientSchema}
 								onSubmit={async (values, { setSubmitting, resetForm }) => {
 									setSubmitting(false);

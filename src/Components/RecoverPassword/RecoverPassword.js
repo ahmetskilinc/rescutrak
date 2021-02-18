@@ -55,7 +55,7 @@ const RecoverPassword = ({ recoverPassword, loading, cleanUp }) => {
 			<div className={classes.root}>
 				<Formik
 					initialValues={{ email: "" }}
-					isInitialValid={false}
+					validateOnMount={true}
 					validationSchema={RecoverSchema}
 					onSubmit={async (values, { setSubmitting }) => {
 						await recoverPassword(values);

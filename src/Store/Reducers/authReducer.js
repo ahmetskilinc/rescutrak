@@ -218,6 +218,19 @@ export default (state = initialState, { type, payload }) => {
 					error: payload,
 				},
 			};
+
+		case actions.FORGOTPASSWORD_PASSWORD_RESET_START:
+			return {
+				...state,
+			};
+		case actions.FORGOTPASSWORD_PASSWORD_RESET_SUCCESS:
+			return {
+				...state,
+			};
+		case actions.FORGOTPASSWORD_PASSWORD_RESET_ERROR:
+			return {
+				...state,
+			};
 		default:
 			return state;
 	}

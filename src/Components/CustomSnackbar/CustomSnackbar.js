@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "actions";
 
 const CustomSnackbar = ({ snackbarOpen, snackbarMessage, snackbarType, closeSnackbar }) => {
-	const handleClose = (event, reason) => {
+	const handleClose = (reason) => {
 		if (reason === "clickaway") {
 			return;
 		}
