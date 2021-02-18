@@ -28,10 +28,10 @@
 	},
 	"scripts": {
 		"postinstall": "link-module-alias",
-		"start": "npm run postinstall && react-scripts start",
+		"start": "react-scripts start",
 		"serve-prod": "npm run postinstall && react-scripts build && serve -s build",
 		"deploy": "npm run postinstall && react-scripts build && firebase deploy --only hosting",
-		"react-build": "npm run postinstall && react-scripts build"
+		"react-build": "react-scripts build"
 	},
 	"browserslist": {
 		"production": [
