@@ -49,7 +49,7 @@ const NavBar = ({ loggedIn, toggleDarkMode, darkState, profileLoaded, usersName,
 					to="/"
 					className={(!loggedIn ? classes.pushRight : "", classes.colorWhite)}
 				>
-					RescuTrak.
+					RescuTrak
 				</Typography>
 				{loggedIn && (
 					<>
