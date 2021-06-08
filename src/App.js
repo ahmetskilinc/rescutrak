@@ -19,17 +19,16 @@ import {
 	EmailVerificationAlert,
 } from "components";
 import { CircularProgress, createMuiTheme, CssBaseline, makeStyles, ThemeProvider } from "@material-ui/core";
-import { isMobile } from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
 	verificationAlert: {
 		padding: theme.spacing(2),
 	},
 	routesWrapper: {
-		paddingLeft: isMobile ? theme.spacing(2) : null,
-		paddingRight: isMobile ? theme.spacing(2) : null,
-		paddingTop: theme.spacing(2),
-		paddingBottom: theme.spacing(2),
+		paddingLeft: 0,
+		paddingRight: 0,
+		paddingTop: theme.spacing(1),
+		paddingBottom: theme.spacing(1),
 	},
 }));
 
@@ -49,10 +48,10 @@ function App({
 			palette: {
 				type: darkState ? "dark" : "light",
 				primary: {
-					main: primaryColor,
+					main: darkState ? "#121212" : primaryColor,
 				},
 				secondary: {
-					main: secondaryColor,
+					main: darkState ? primaryColor : secondaryColor,
 				},
 			},
 		});
@@ -75,24 +74,38 @@ function App({
 	let routes;
 	if (loggedIn) {
 		routes = (
-			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/patients" component={Patients} />
-				<Route exact path="/patients/:when" component={Patients} />
-				<Route exact path="/profile" component={Profile} />
-				<Route exact path="/profile/edit" component={ProfileEdit} />
-				<Route exact path="/logout" component={Logout} />
-				<Redirect to="/" />
-			</Switch>
+			<React.Fragment>
+				<Helmet>
+					<title>{rescueName} | ReacuTrak</title>
+					<meta name="theme-color" content={`${primaryColor}`} />
+					<meta name="msapplication-TileColor" content={`${primaryColor}`} />
+					<meta name="msapplication-navbutton-color" content={`${primaryColor}`} />
+					<meta name="apple-mobile-web-app-status-bar-style" content={`${primaryColor}`} />
+				</Helmet>
+				<Switch>
+					<Route exact path="/" component={Home} />
+					<Route exact path="/patients" component={Patients} />
+					<Route exact path="/patients/:when" component={Patients} />
+					<Route exact path="/profile" component={Profile} />
+					<Route exact path="/profile/edit" component={ProfileEdit} />
+					<Route exact path="/logout" component={Logout} />
+					<Redirect to="/" />
+				</Switch>
+			</React.Fragment>
 		);
 	} else {
 		routes = (
-			<Switch>
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/signup" component={SignUp} />
-				<Route exact path="/recover-password" component={RecoverPassword} />
-				<Redirect to="/login" />
-			</Switch>
+			<React.Fragment>
+				<Helmet>
+					<meta name="theme-color" content={`${primaryColor}`} />
+				</Helmet>
+				<Switch>
+					<Route exact path="/login" component={Login} />
+					<Route exact path="/signup" component={SignUp} />
+					<Route exact path="/recover-password" component={RecoverPassword} />
+					<Redirect to="/login" />
+				</Switch>
+			</React.Fragment>
 		);
 	}
 
@@ -101,10 +114,6 @@ function App({
 			<ThemeProvider theme={theme}>
 				{profileLoaded ? (
 					<React.Fragment>
-						<Helmet>
-							<title>{rescueName} | ReacuTrak</title>
-							<meta name="theme-color" content={`${primaryColor}`} />
-						</Helmet>
 						<CssBaseline />
 						<NavBar />
 						<div className="wrapper">
