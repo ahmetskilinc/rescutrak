@@ -52,7 +52,7 @@ const NavBar = ({ loggedIn, toggleDarkMode, darkState, profileLoaded, usersName,
 					RescuTrak
 				</Typography>
 				{loggedIn && (
-					<>
+					<React.Fragment>
 						<div className={classes.pushRight}>
 							<Button className={classes.colorWhite} component={Link} to="/patients">
 								Patients
@@ -77,7 +77,12 @@ const NavBar = ({ loggedIn, toggleDarkMode, darkState, profileLoaded, usersName,
 							open={Boolean(anchorEl)}
 							onClose={handleClose}
 						>
-							<MenuItem onClick={handleClose} component={Link} to="/profile" className={classes.menuItem}>
+							<MenuItem
+								onClick={handleClose}
+								component={Link}
+								to="/profile"
+								className={classes.menuItem}
+							>
 								Profile
 							</MenuItem>
 							<MenuItem
@@ -88,11 +93,16 @@ const NavBar = ({ loggedIn, toggleDarkMode, darkState, profileLoaded, usersName,
 							>
 								Settings
 							</MenuItem>
-							<MenuItem onClick={handleClose} component={Link} to="/logout" className={classes.menuItem}>
+							<MenuItem
+								onClick={handleClose}
+								component={Link}
+								to="/logout"
+								className={classes.menuItem}
+							>
 								Logout
 							</MenuItem>
 						</Menu>
-					</>
+					</React.Fragment>
 				)}
 			</Toolbar>
 		</AppBar>

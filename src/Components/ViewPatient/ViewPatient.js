@@ -87,7 +87,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 				/>
 
 				{
-					<>
+					<React.Fragment>
 						<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<Formik
 								initialValues={{
@@ -124,7 +124,10 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 														name="name"
 														className={classes.textField}
 													/>
-													<FormControl variant="outlined" className={classes.textField}>
+													<FormControl
+														variant="outlined"
+														className={classes.textField}
+													>
 														<InputLabel>Status</InputLabel>
 														<Field
 															component={Select}
@@ -140,7 +143,9 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 															<MenuItem value="icu">Intensive Care</MenuItem>
 															<MenuItem value="released">Released</MenuItem>
 															<MenuItem value="deceased">Deceased</MenuItem>
-															<MenuItem value="unreleasable">Unreleasable</MenuItem>
+															<MenuItem value="unreleasable">
+																Unreleasable
+															</MenuItem>
 														</Field>
 													</FormControl>
 													<Field
@@ -203,7 +208,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 															<EditRoundedIcon />
 														</IconButton>
 													) : (
-														<>
+														<React.Fragment>
 															<IconButton type="submit" color="primary">
 																<SaveRoundedIcon />
 															</IconButton>
@@ -215,7 +220,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 															>
 																<DeleteForeverRoundedIcon />
 															</IconButton>
-														</>
+														</React.Fragment>
 													)}
 												</CardActions>
 											</Form>
@@ -226,7 +231,7 @@ const ViewPatient = ({ showModal, close, updatePatient, userId, patientId, delet
 								}}
 							</Formik>
 						</MuiPickersUtilsProvider>
-					</>
+					</React.Fragment>
 				}
 			</Card>
 		</Modal>

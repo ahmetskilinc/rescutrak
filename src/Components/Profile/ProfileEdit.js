@@ -190,7 +190,7 @@ const ProfileEdit = ({
 
 	if (!firebase.profile.isLoaded) return <CircularProgress />;
 	return (
-		<>
+		<React.Fragment>
 			<div className={classes.root}>
 				<Accordion expanded={expanded === "panel1"} onChange={handleChange("panel1")}>
 					<AccordionSummary
@@ -270,7 +270,10 @@ const ProfileEdit = ({
 													"Save Profile"
 												)}
 											</Button>
-											<Typography variant="body1" className={classes.errorMessage}></Typography>
+											<Typography
+												variant="body1"
+												className={classes.errorMessage}
+											></Typography>
 										</Form>
 									);
 								}
@@ -460,7 +463,10 @@ const ProfileEdit = ({
 											>
 												Save Profile
 											</Button>
-											<Typography variant="body1" className={classes.errorMessage}></Typography>
+											<Typography
+												variant="body1"
+												className={classes.errorMessage}
+											></Typography>
 										</Form>
 									);
 								} else if (isSubmitting) {
@@ -533,13 +539,17 @@ const ProfileEdit = ({
 						<DangerButton color="secondary" variant="contained" onClick={handleDeleteAccount}>
 							Delete my account
 						</DangerButton>
-						<Button color="primary" variant="contained" onClick={() => setShowDeleteAccountModal(false)}>
+						<Button
+							color="primary"
+							variant="contained"
+							onClick={() => setShowDeleteAccountModal(false)}
+						>
 							Cancel
 						</Button>
 					</CardActions>
 				</Card>
 			</Modal>
-		</>
+		</React.Fragment>
 	);
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Route, BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "./App.css";
 import * as actions from "actions";
 
@@ -32,7 +33,16 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-function App({ loggedIn, darkState, emailVerified, primaryColor, secondaryColor, profileLoaded, profileEmpty }) {
+function App({
+	loggedIn,
+	darkState,
+	emailVerified,
+	primaryColor,
+	secondaryColor,
+	profileLoaded,
+	profileEmpty,
+	rescueName,
+}) {
 	let theme;
 	if (profileLoaded && profileEmpty === false) {
 		theme = createMuiTheme({
@@ -90,7 +100,11 @@ function App({ loggedIn, darkState, emailVerified, primaryColor, secondaryColor,
 		<Router>
 			<ThemeProvider theme={theme}>
 				{profileLoaded ? (
-					<>
+					<React.Fragment>
+						<Helmet>
+							<title>{rescueName} | ReacuTrak</title>
+							<meta name="theme-color" content={`${primaryColor}`} />
+						</Helmet>
 						<CssBaseline />
 						<NavBar />
 						<div className="wrapper">
@@ -98,7 +112,7 @@ function App({ loggedIn, darkState, emailVerified, primaryColor, secondaryColor,
 							<div className={classes.routesWrapper}>{routes}</div>
 						</div>
 						<CustomSnackbar />
-					</>
+					</React.Fragment>
 				) : (
 					<div className="spinnerWrapper">
 						<CircularProgress />
@@ -117,6 +131,7 @@ const mapStateToProps = ({ firebase }) => ({
 	profileEmpty: firebase.profile.isEmpty,
 	primaryColor: firebase.profile.primaryColor,
 	secondaryColor: firebase.profile.secondaryColor,
+	rescueName: firebase.profile.rescueName,
 });
 
 const mapDispatchToProps = {

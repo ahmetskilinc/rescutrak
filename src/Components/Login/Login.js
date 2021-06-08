@@ -54,7 +54,7 @@ const Login = ({ login, loading, cleanUp }) => {
 	}, [cleanUp]);
 
 	return (
-		<>
+		<React.Fragment>
 			<div className={classes.root}>
 				<Formik
 					initialValues={{ email: "", password: "" }}
@@ -118,7 +118,7 @@ const Login = ({ login, loading, cleanUp }) => {
 					}}
 				</Formik>
 			</div>
-		</>
+		</React.Fragment>
 	);
 };
 

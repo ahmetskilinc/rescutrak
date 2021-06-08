@@ -51,7 +51,7 @@ const RecoverPassword = ({ recoverPassword, loading, cleanUp }) => {
 	}, [cleanUp]);
 
 	return (
-		<>
+		<React.Fragment>
 			<div className={classes.root}>
 				<Formik
 					initialValues={{ email: "" }}
@@ -101,7 +101,7 @@ const RecoverPassword = ({ recoverPassword, loading, cleanUp }) => {
 					}}
 				</Formik>
 			</div>
-		</>
+		</React.Fragment>
 	);
 };
 

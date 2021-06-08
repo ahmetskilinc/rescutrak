@@ -66,7 +66,7 @@ const NewPatient = ({ addPatient, loading, error }) => {
 	const [showModal, setShowModal] = useState(false);
 	const classes = useStyles();
 	return (
-		<>
+		<React.Fragment>
 			<Button variant="contained" color="secondary" onClick={() => setShowModal(true)}>
 				Add Patient
 			</Button>
@@ -80,7 +80,7 @@ const NewPatient = ({ addPatient, loading, error }) => {
 						}
 						title="New Patient"
 					/>
-					<>
+					<React.Fragment>
 						<Formik
 							initialValues={{
 								name: "",
@@ -181,10 +181,10 @@ const NewPatient = ({ addPatient, loading, error }) => {
 								}
 							}}
 						</Formik>
-					</>
+					</React.Fragment>
 				</Card>
 			</Modal>
-		</>
+		</React.Fragment>
 	);
 };
 

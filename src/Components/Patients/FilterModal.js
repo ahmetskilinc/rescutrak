@@ -54,12 +54,12 @@ const FilterModal = ({ setFilterRescuer, error }) => {
 	const [showModal, setShowModal] = useState(false);
 	const classes = useStyles();
 	return (
-		<>
+		<React.Fragment>
 			<Button color="secondary" onClick={() => setShowModal(true)}>
 				Filter
 			</Button>
 			<Modal open={showModal} className={classes.modal}>
-				<>
+				<React.Fragment>
 					<Formik
 						initialValues={{
 							rescuer: "",
@@ -120,9 +120,9 @@ const FilterModal = ({ setFilterRescuer, error }) => {
 							}
 						}}
 					</Formik>
-				</>
+				</React.Fragment>
 			</Modal>
-		</>
+		</React.Fragment>
 	);
 };
 

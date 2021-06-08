@@ -59,7 +59,7 @@ const SignUp = ({ signUp, loading, cleanUp }) => {
 		};
 	}, [cleanUp]);
 	return (
-		<>
+		<React.Fragment>
 			<div className={classes.root}>
 				<Formik
 					initialValues={{
@@ -163,7 +163,7 @@ const SignUp = ({ signUp, loading, cleanUp }) => {
 					}}
 				</Formik>
 			</div>
-		</>
+		</React.Fragment>
 	);
 };
 

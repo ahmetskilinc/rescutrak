@@ -75,7 +75,7 @@ const Patients = ({ userId, requesting, requested }) => {
 				);
 			} else {
 				return (
-					<>
+					<React.Fragment>
 						<TableContainer component={Paper}>
 							<Table>
 								<TableHead>
@@ -111,7 +111,7 @@ const Patients = ({ userId, requesting, requested }) => {
 								patientId={currentViewPatient}
 							/>
 						)}
-					</>
+					</React.Fragment>
 				);
 			}
 		} else {
@@ -124,7 +124,7 @@ const Patients = ({ userId, requesting, requested }) => {
 	};
 	const classes = useStyles();
 	return (
-		<>
+		<React.Fragment>
 			<div className={classes.header}>
 				<Typography variant="h4">All patients</Typography>
 				<div>
@@ -133,7 +133,7 @@ const Patients = ({ userId, requesting, requested }) => {
 				</div>
 			</div>
 			<Content />
-		</>
+		</React.Fragment>
 	);
 };
 
