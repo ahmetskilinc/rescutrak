@@ -41,21 +41,22 @@ const DangerButton = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		width: isMobile ? "100%" : "400px",
+		width: isMobile ? "100%" : "520px",
 		margin: "0 auto",
 	},
 
 	card: {
-		maxWidth: 400,
+		maxWidth: "400px",
 		margin: "0 auto",
 	},
 	cardContent: {
-		padding: theme.spacing(2),
+		padding: theme.spacing(1),
 	},
 	divider: {
 		margin: "auto",
 		marginTop: theme.spacing(3),
 		marginBottom: theme.spacing(3),
+		width: isMobile ? "100%" : "520px",
 	},
 	buttons: {
 		display: "flex",

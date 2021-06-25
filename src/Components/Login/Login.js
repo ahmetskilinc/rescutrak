@@ -12,17 +12,13 @@ import { isMobile } from "react-device-detect";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		paddingTop: theme.spacing(2),
 		width: isMobile ? "100%" : "460px",
 		margin: "0 auto",
 	},
 	formContainer: {
-		padding: isMobile ? theme.spacing(2) : null,
+		padding: theme.spacing(2),
 		display: "flex",
 		flexDirection: "column",
-	},
-	paperContainer: {
-		padding: theme.spacing(2),
 	},
 	button: {
 		marginTop: theme.spacing(2),
