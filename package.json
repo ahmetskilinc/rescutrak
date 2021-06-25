@@ -31,7 +31,7 @@
 		"postinstall": "link-module-alias",
 		"start": "react-scripts start",
 		"serve-prod": "npm run postinstall && react-scripts build && serve -s build",
-		"deploy": "npm run postinstall && react-scripts build && firebase deploy --only hosting",
+		"deploy": "npm run postinstall && react-scripts build && firebase deploy",
 		"react-build": "react-scripts build"
 	},
 	"browserslist": {
