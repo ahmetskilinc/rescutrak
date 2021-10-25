@@ -1,31 +1,31 @@
-# name: Build and Deploy
+name: Build and Deploy
 
-# on:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   
-# jobs:
-#   build-and-deploy:
-#     name: Build and Deploy
-#     runs-on: [ubuntu-latest]
-#     steps:
-#     - name: Checkout Repo
-#       uses: actions/checkout@v2
-#     - name: Install dependencies
-#       run: npm install
-#     - name: Make envfile
-#       uses: SpicyPizza/create-envfile@v1
-#       with:
-#         envkey_DEBUG: false
-#         envkey_REACT_APP_FIREBASE_API_TOKEN: ${{ secrets.FIREBASE_API_TOKEN }}
-#         file_name: .env
-#     - name: Build
-#       run: npm run react-build
-#     - name: Deploy to firebase
-#       uses: w9jds/firebase-action@master
-#       with:
-#         args: deploy
-#       env: 
-#         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: [ubuntu-latest]
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Install dependencies
+      run: npm install
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1
+      with:
+        envkey_DEBUG: false
+        envkey_REACT_APP_FIREBASE_API_TOKEN: ${{ secrets.FIREBASE_API_TOKEN }}
+        file_name: .env
+    - name: Build
+      run: npm run react-build
+    - name: Deploy to firebase
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy
+      env: 
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
